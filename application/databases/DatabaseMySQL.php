@@ -3,6 +3,7 @@
 namespace application\databases;
 use application\contracts\DatabaseInterface;
 use PDO;
+use PDOStatement;
 
 class DatabaseMySQL implements DatabaseInterface
 {
@@ -13,7 +14,7 @@ class DatabaseMySQL implements DatabaseInterface
         $this->db = ConnectionToMySQL::connect();
     }
 
-    public function executeQuery($query, $params = []) {
+    public function executeQuery($query, $params = []): false|PDOStatement {
         $stmt = $this->db->prepare($query);
         if (!empty($params)) {
             foreach ($params as $key => $val) {
@@ -24,14 +25,13 @@ class DatabaseMySQL implements DatabaseInterface
         return $stmt;
     }
 
-    public function row($query, $params = []) {
+    public function row($query, $params = []): array|false {
         $result = $this->executeQuery($query, $params);
         return $result->fetchAll(PDO::FETCH_ASSOC);
-
     }
 
     public function column($sql, $params = []) {
-        $result = $this->query($sql, $params);
+        $result = $this->executeQuery($sql, $params);
         return $result->fetchColumn();
     }
 }
