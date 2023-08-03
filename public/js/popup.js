@@ -3,11 +3,15 @@ var signUpModal = document.getElementById("sign-up-modal");
 var signInButton = document.getElementById("sign-in-button");
 var signUpButton = document.getElementById("sign-up-button");
 
-signInButton.onclick = function() {
-   signInModal.style.display = "block";
+function showModal (modalID) {
+    modalID.style.display = "block";
 }
 
-signUpButton.onclick = function() {
+signInButton.onclick = function () {
+    signInModal.style.display = "block";
+}
+
+signUpButton.onclick = function () {
     signUpModal.style.display = "block";
 }
 
