@@ -35,23 +35,23 @@
                         <div class="col-8">
                             <form method="post" action="">
                                 <div class="form-group row mb-2">
-                                    <input id="name" type="text" class="form-control form-control-lg col me-4"
+                                    <input required id="name" type="text" class="form-control form-control-lg col me-4"
                                            placeholder="Name">
-                                    <input id="surname" type="text" class="form-control form-control-lg col"
+                                    <input required id="surname" type="text" class="form-control form-control-lg col"
                                            placeholder="Surname">
                                 </div>
                                 <div class="form-group row mb-2">
-                                    <input id="email" type="text" class="form-control form-control-lg col me-4"
+                                    <input required id="email" type="text" class="form-control form-control-lg col me-4"
                                            placeholder="Email">
-                                    <select id="role" class="form-control form-control-lg text-muted col" name="Role">
+                                    <select required id="role" class="form-control form-control-lg text-muted col" name="Role">
                                         <option value="investor">Investor</option>
                                         <option value="team member">Team Member</option>
                                     </select>
                                 </div>
                                 <div class="form-group row mb-5">
-                                    <input id="password" type="password" class="form-control form-control-lg col me-4"
+                                    <input required id="password" type="password" class="form-control form-control-lg col me-4"
                                            placeholder="Password">
-                                    <input id="repeatPassword" type="password"
+                                    <input required id="repeatPassword" type="password"
                                            class="form-control form-control-lg col" placeholder="Repeat password">
                                 </div>
                                 <div class="row">
