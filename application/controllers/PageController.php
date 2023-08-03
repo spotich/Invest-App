@@ -9,16 +9,16 @@ class PageController
     public static function showHome(): void
     {
         $userData = AuthenticationController::getCurrentUserData();
-        if (!empty($userData)) {
+        if (is_null($userData)) {
             $vars = [
                 'title' => 'Home',
-                'menu' => 'auth',
-                'user' => $userData,
+                'menu' => 'anon',
             ];
         } else {
             $vars = [
                 'title' => 'Home',
-                'menu' => 'anon',
+                'menu' => 'auth',
+                'user' => $userData,
             ];
         }
         View::render('home', $vars);
@@ -27,15 +27,15 @@ class PageController
     public static function showProfile(): void
     {
         $userData = AuthenticationController::getCurrentUserData();
-        if (!empty($userData)) {
+        if(is_null($userData)) {
+            View::redirect('/');
+        } else {
             $vars = [
                 'title' => 'Profile',
                 'menu' => 'auth',
                 'user' => $userData,
             ];
             View::render('profile', $vars);
-        } else {
-            View::redirect('/');
         }
     }
 }
