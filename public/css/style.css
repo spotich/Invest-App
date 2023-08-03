@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,151,501&display=swap');
+
+.navbar {
+    border: 1px solid #000;
+    border-radius: 5px;
+    min-height: 100px;
+    font-family: Inter, sans-serif;
+    background-color: #ffffff;
+}
+
+.nav-item {
+    font-weight: 500;
+    border: 1px solid rgba(102, 182, 255, 0);
+    background-color: rgba(203, 227, 250, 0);
+    border-radius: 5px;
+    font-size: large;
+}
+
+.active  {
+    border: 1px solid rgba(102, 182, 255, 1);
+    background-color: rgba(203, 227, 250, 1);
+}
+
+.nav-item:active {
+    border: 1px solid rgba(102, 182, 255, 1);
+}
+
+.nav-item img {
+    width: 25px;
+    height: 25px;
+}
+
+button img {
+    width: 25px;
+    height: 25px;
+}
+
+.navbar-brand {
+    font-family: Roboto Flex, sans-serif;
+    font-weight: bold;
+    font-stretch: extra-expanded;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    padding-top: 8%;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding-top: 7%;
+    padding-bottom: 7%;
+    border: 5px solid #000;
+    border-radius: 5px;
+}
+
+.popup-title {
+    text-align: center;
+    color: black;
+    font-family: Inter, sans-serif;
+    font-size: 90px;
+    font-weight: bold;
+    margin-bottom: 5%;
+}
+
+/*#menu button {*/
+/*    font-weight: 500;*/
+/*    height: 60px;*/
+/*    padding-right: 25px;*/
+/*    padding-left: 25px;*/
+/*}*/
+
+h1 {
+    font-family: Inter, sans-serif;
+    opacity: 0.3;
+    text-align: center;
+}
+
+#title {
+    font-weight: bold;
+    font-size: 7em;
+    margin-top: 15%;
+    margin-bottom: 10%;
+}
+
+
+.number {
+    font-family: Roboto Flex, sans-serif;
+    font-weight: 501;
+    font-stretch: expanded;
+    font-size: 90px;
+    opacity: 0.5;
+}
+
+p {
+    font-family: Inter, sans-serif;
+    font-size: 20px;
+    /*text-align: center;*/
+}
+
+form a {
+    font-family: Inter, sans-serif;
+    font-size: 15px;
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.pageName {
+    margin-top: 10%;
+    text-align: center;
+    color: black;
+    font-family: Inter, sans-serif;
+    font-size: 90px;
+    font-weight: bold;
+    margin-bottom: 3%;
+    opacity: 0.3;
+}
+
+.profile-pic {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    object-fit: cover;
+    width: 450px;
+    height: 350px;
+}
+
+.avatar {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    object-fit: cover;
+    width: 77px;
+    height: 60px;
+}
+
+.role {
+    opacity: 0.5;
+    font-size: 18px;
+}
