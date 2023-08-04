@@ -9,5 +9,5 @@ spl_autoload_register(function ($class) {
 use application\core\Router;
 
 session_start();
-Router::getRoutes();
+Router::bindRoutes();
 Router::run();

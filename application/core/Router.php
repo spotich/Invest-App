@@ -7,7 +7,7 @@ class Router
     private static $routes = [];
     private static $params = [];
 
-    public static function getRoutes(): void
+    public static function bindRoutes(): void
     {
         $routes = require dirname(__DIR__, 1) . '/config/routes.php';
         foreach ($routes as $route => $params) {
@@ -17,14 +17,12 @@ class Router
 
     public static function add($route, $params): void
     {
-        $route = '#^'.$route.'$#';
         Router::$routes[$route] = $params;
     }
 
     public static function match(): bool
     {
         $url = trim($_SERVER['REQUEST_URI'], '/');
-
         foreach (Router::$routes as $route => $params) {
             if (preg_match($route, $url, $matches)) {
                 Router::$params = $params;

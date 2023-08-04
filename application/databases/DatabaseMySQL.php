@@ -25,12 +25,12 @@ class DatabaseMySQL implements DatabaseInterface
         return $stmt;
     }
 
-    public function row($query, $params = []): array|false {
+    public function getRow($query, $params = []): array|false {
         $result = $this->executeQuery($query, $params);
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function column($sql, $params = []) {
+    public function getColumn($sql, $params = []) {
         $result = $this->executeQuery($sql, $params);
         return $result->fetchColumn();
     }
