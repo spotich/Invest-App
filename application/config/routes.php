@@ -2,30 +2,51 @@
 
 use application\controllers\PageController;
 use application\controllers\AuthenticationController;
+use application\controllers\SessionController;
 
 return [
-    '' => [
+    '/^$/' => [
         'controller' => PageController::class,
-        'action' => 'showHome',
+        'action' => 'showHomePage',
     ],
 
-    'profile' => [
+    '/^profile$/' => [
         'controller' => PageController::class,
-        'action' => 'showProfile',
+        'action' => 'showProfilePage',
     ],
 
-    'login' => [
-        'controller' => AuthenticationController::class,
-        'action' => 'authenticateUser',
+    '/^login$/' => [
+        'controller' => PageController::class,
+        'action' => 'showLoginPage',
     ],
 
-    'logout' => [
-        'controller' => AuthenticationController::class,
-        'action' => 'logoutUser',
+    '/^signup$/' => [
+        'controller' => PageController::class,
+        'action' => 'showSignupPage',
     ],
 
-    'register' => [
+    '/^register$/' => [
         'controller' => AuthenticationController::class,
-        'action' => 'registerUser',
+        'action' => 'createRegistrationRequest',
+    ],
+
+    '/^authenticate$/' => [
+        'controller' => AuthenticationController::class,
+        'action' => 'createAuthenticationRequest',
+    ],
+
+    '/^authenticate\/(\d+-[a-zA-Z0-9]{40})$/' => [
+        'controller' => AuthenticationController::class,
+        'action' => 'processAuthenticationRequest',
+    ],
+
+    '/^logout$/' => [
+        'controller' => SessionController::class,
+        'action' => 'clearCurrentUserData',
+    ],
+
+    '/^reset/' => [
+        'controller' => PageController::class,
+        'action' => 'showResetPasswordPage',
     ],
 ];
