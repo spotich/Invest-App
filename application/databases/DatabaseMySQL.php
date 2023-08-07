@@ -18,7 +18,7 @@ class DatabaseMySQL implements DatabaseInterface
         $stmt = $this->db->prepare($query);
         if (!empty($params)) {
             foreach ($params as $key => $val) {
-                $stmt->bindParam(":$key", $val);
+                $stmt->bindValue(":$key", $val);
             }
         }
         $stmt->execute();
