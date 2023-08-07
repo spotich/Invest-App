@@ -1,6 +1,7 @@
 <?php
 
 namespace application\core;
+use \ReflectionParameter;
 
 class Router
 {
@@ -26,6 +27,9 @@ class Router
         foreach (Router::$routes as $route => $params) {
             if (preg_match($route, $url, $matches)) {
                 Router::$params = $params;
+                if (isset($matches[1])) {
+                    Router::$params['argument'] = $matches[1];
+                }
                 return true;
             }
         }
@@ -39,8 +43,17 @@ class Router
             $action = Router::$params['action'];
 
             if (class_exists($Controller) and method_exists($Controller, $action)) {
+
                 $controller = new $Controller;
-                $controller->$action();
+                $reflection = new \ReflectionMethod($Controller, $action);
+                $actionParametersCount = $reflection->getNumberOfParameters();
+
+                if ($actionParametersCount === 1 and isset(Router::$params['argument'])) {
+                    $argument = Router::$params['argument'];
+                    $controller->$action($argument);
+                } else {
+                    $controller->$action();
+                }
             } else {
                 View::errorCode(404);
             }

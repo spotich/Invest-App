@@ -6,7 +6,7 @@ use application\contracts\DatabaseInterface;
 
 abstract class Model
 {
-    public $db;
+    protected $db;
 
     public function __construct(DatabaseInterface $Database) {
         $this->db = $Database;
