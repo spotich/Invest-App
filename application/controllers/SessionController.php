@@ -9,7 +9,7 @@ class SessionController
 {
     public static function getCurrentUserData(): array|null
     {
-        if (SessionController::isCurrentUserActive()) {
+        if (self::isCurrentUserActive()) {
             $userData = [
                 'name' => $_SESSION['name'],
                 'surname' => $_SESSION['surname'],
@@ -37,7 +37,7 @@ class SessionController
 
     #[NoReturn] public static function clearCurrentUserData():void
     {
-        if (SessionController::isCurrentUserActive()) {
+        if (self::isCurrentUserActive()) {
             session_unset();
             session_destroy();
         }

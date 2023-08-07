@@ -26,12 +26,7 @@
     border: 1px solid rgba(102, 182, 255, 1);
 }
 
-.nav-item img {
-    width: 25px;
-    height: 25px;
-}
-
-button img {
+.icon {
     width: 25px;
     height: 25px;
 }
@@ -83,10 +78,9 @@ h1 {
 #title {
     font-weight: bold;
     font-size: 7em;
-    margin-top: 15%;
-    margin-bottom: 10%;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
 }
-
 
 .number {
     font-family: Roboto Flex, sans-serif;
@@ -99,7 +93,6 @@ h1 {
 p {
     font-family: Inter, sans-serif;
     font-size: 20px;
-    /*text-align: center;*/
 }
 
 form a {
@@ -112,7 +105,7 @@ form a {
 }
 
 .pageName {
-    margin-top: 10%;
+    margin-top: 2em;
     text-align: center;
     color: black;
     font-family: Inter, sans-serif;
@@ -141,4 +134,21 @@ form a {
 .role {
     opacity: 0.5;
     font-size: 18px;
+}
+
+#verify-container {
+    margin-top: 2em;
+    opacity: 0.6;
+}
+
+.error {
+    color: red;
+    opacity: 0.6;
+    font-weight: bold;
+}
+
+.fine {
+    color: green;
+    opacity: 0.6;
+    font-weight: bold;
 }
