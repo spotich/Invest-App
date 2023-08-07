@@ -28,10 +28,7 @@ class View
 
     #[NoReturn] public static function errorCode($code): void {
         http_response_code($code);
-        ob_start();
-        require dirname(__DIR__, 1) . "/views/errors/$code.php";
-        $content = ob_get_clean();
-        require dirname(__DIR__, 1) . "/views/layouts/default.php";
+        require dirname(__DIR__, 1) . "/views/layouts/error.php";
         exit;
     }
 }
