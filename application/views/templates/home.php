@@ -27,8 +27,8 @@
         <div class="row">
             <div class="col-2"></div>
             <div class="modal-content col-10">
-                <h2 class="popup-title">Join us!</h2>
-                <p class="text-center">Create personal account and become a member!</p>
+                <h2 class="popup-title">Coming soon</h2>
+                <p class="text-center">While we are working, create personal account get notified when it's ready!</p>
                 <div class="container text-center">
                     <div class="row">
                         <div class="col-2"></div>
