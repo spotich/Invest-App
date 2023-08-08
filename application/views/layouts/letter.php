@@ -1,10 +1,9 @@
 <html>
 <head>
-    <title>Two Factor Authentication</title>
+    <title><?php echo $vars['title']; ?></title>
 </head>
 <body>
-<p>Someone was trying to enter your account</p><br>
-<p>if it was you, please follow the link</p>
-<a href="http://<?php echo $_SERVER['SERVER_NAME']; ?>/authenticate/<?php echo $id; ?>-<?php echo $two_factor_authentication_code; ?>">Veify</a>
+<p><?php echo $vars['content']; ?></p>
+<a href="<?php echo $vars['link_href']; ?>"><?php echo $vars['link_text']; ?></a>
 </body>
 </html>

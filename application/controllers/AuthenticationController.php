@@ -5,10 +5,12 @@ namespace application\controllers;
 use application\core\View;
 use application\databases\DatabaseMySQL;
 use application\models\UserModel;
-
+use application\traits\EmailTrait;
 
 class AuthenticationController
 {
+    use EmailTrait;
+
     private static UserModel $model;
 
     public function __construct()
@@ -20,10 +22,7 @@ class AuthenticationController
     public static function createAuthenticationRequest(): void
     {
         if (isset($_POST['email']) and isset($_POST['password'])) {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $user = self::$model->getUserByEmail($email);
-
+            $user = self::$model->getUserByEmail($_POST['email']);
             if (is_null($user)) {
                 $message = 'User not found';
                 $vars = [
@@ -32,13 +31,30 @@ class AuthenticationController
                     'message' => $message,
                 ];
                 View::render('login', $vars);
-                exit;
-            } elseif (md5($password) == $user['password']) {
+            } elseif (md5($_POST['password']) == $user['password']) {
                 if ($user['expiration_time'] < date('Y-m-d H:i:s', time())) {
                     $_SESSION['authentication_request'] = 'created';
                     $user['two_factor_authentication_code'] = self::$model->updateAuthenticationCodeForUser($user['id']);
-                    self::sendAuthenticationEmail($user);
-                    PageController::showVerifyPage($email);
+                    $emailVars = [
+                        'to' => $user['email'],
+                        'subject' => 'Email verification',
+                        'title' => 'Verify your email',
+                        'content' => 'Someone was trying to enter your account. If it was you, follow the link below.',
+                        'link_href' => PROTOCOL.'//'.HOSTNAME.'/authenticate/'.$user['id'].'-'.$user['two_factor_authentication_code'],
+                        'link_text' => 'Verify',
+                    ];
+                    if (self::sendEmail($emailVars)) {
+                        $vars = [
+                            'title' => 'Verify your email',
+                            'menu' => 'anon',
+                            'pageTitle' => 'Verify your email',
+                            'email' => $user['email'],
+                            'pageContent' => 'Follow the link in letter to verify your email address',
+                        ];
+                        View::render('emailSent', $vars);
+                    } else {
+                        PageController::showErrorPage(404);
+                    }
                 } else {
                     SessionController::setCurrentUserData($user);
                     View::redirect('/');
@@ -57,32 +73,11 @@ class AuthenticationController
         }
     }
 
-    private static function sendAuthenticationEmail($user)
-    {
-        if (isset($user['two_factor_authentication_code'])) {
-            extract($user);
-            $to = $email;
-            $subject = 'User authentication';
-            ob_start();
-            require dirname(__DIR__, 1) . "/views/layouts/letter.php";
-            $message = ob_get_clean();
-            $headers[] = 'MIME-Version: 1.0';
-            $headers[] = 'Content-type: text/html; charset=iso-8859-1';
-            $headers[] = 'From: Invest-App <popenko1337@gmail.com>';
-            $result = mail($to, $subject, $message, implode("\r\n", $headers));
-            if (!$result) {
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }
-
-    public static function processAuthenticationRequest($verificationCode)
+    public static function processAuthenticationRequest($verificationCombination)
     {
         if ($_SESSION['authentication_request'] === 'created') {
             $pattern = '/^(\d+)-([a-zA-Z0-9]{40})$/';
-            if (preg_match($pattern, $verificationCode, $matches)) {
+            if (preg_match($pattern, $verificationCombination, $matches)) {
                 $id = $matches[1];
                 $two_factor_authentication_code = $matches[2];
                 $user = self::$model->getUserById($id);
@@ -101,10 +96,9 @@ class AuthenticationController
         } else {
             PageController::showErrorPage(404);
         }
-
     }
 
-    public static function createRegistrationRequest(): void
+    public static function registerUser(): void
     {
         if (isset($_POST['name']) and isset($_POST['surname']) and isset($_POST['email']) and isset($_POST['role']) and isset($_POST['password']) and isset($_POST['repeatPassword'])) {
             $user = self::$model->getUserByEmail($_POST['email']);
