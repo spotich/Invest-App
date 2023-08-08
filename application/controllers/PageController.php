@@ -27,8 +27,8 @@ class PageController
     public static function showProfilePage(): void
     {
         $userData = SessionController::getCurrentUserData();
-        if(is_null($userData)) {
-            View::redirect('/');
+        if (is_null($userData)) {
+            View::redirect('/login');
         } else {
             $vars = [
                 'title' => 'Profile',
@@ -39,20 +39,8 @@ class PageController
         }
     }
 
-    public static function showVerifyPage($email): void {
-        if (SessionController::isCurrentUserActive()) {
-            View::redirect('/profile');
-        } else {
-            $vars = [
-                'title' => 'Verify',
-                'menu' => 'anon',
-                'email' => $email,
-            ];
-            View::render('verify', $vars);
-        }
-    }
-
-    public static function showLoginPage() {
+    public static function showLoginPage()
+    {
         if (SessionController::isCurrentUserActive()) {
             View::redirect('/profile');
         } else {
@@ -65,7 +53,8 @@ class PageController
         }
     }
 
-    public static function showSignupPage() {
+    public static function showSignupPage()
+    {
         if (SessionController::isCurrentUserActive()) {
             View::redirect('/profile');
         } else {
@@ -78,20 +67,31 @@ class PageController
         }
     }
 
-    public static function showResetPasswordPage() {
+    public static function showRecoveryPage()
+    {
         if (SessionController::isCurrentUserActive()) {
             View::redirect('/profile');
         } else {
             $vars = [
-                'title' => 'Reset',
+                'title' => 'Recovery',
                 'menu' => 'anon',
                 'message' => '',
             ];
-            View::render('reset', $vars);
+            View::render('recovery', $vars);
         }
     }
 
-    public static function showErrorPage($code): void {
+    public static function showNewPasswordPage() {
+        $vars = [
+            'title' => 'New password',
+            'menu' => 'anon',
+            'message' => '',
+        ];
+        View::render('newPassword', $vars);
+    }
+
+    public static function showErrorPage($code): void
+    {
         View::errorCode($code);
     }
 }
