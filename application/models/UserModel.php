@@ -18,12 +18,13 @@ class UserModel extends Model
         return (!$result) ? null : $result[0];
     }
 
-    public function createNewUser($user = []) {
+    public function createNewUser($user = []): int|null {
         $ok = (isset($user['name']) and isset($user['surname']) and isset($user['email']) and isset($user['role']) and isset($user['password']));
         if ($ok) {
             $this->db->executeQuery('INSERT INTO users (name, surname, email, role, password) VALUES (:name, :surname, :email, :role, :password)', $user);
+            $id = $this->getUserByEmail($user['email'])['id'];
         }
-        return false;
+        return $id;
     }
 
     public function updateAuthenticationCodeForUser(int $id): string {
