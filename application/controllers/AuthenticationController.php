@@ -109,9 +109,31 @@ class AuthenticationController
                 $user['email'] = $_POST['email'];
                 $user['role'] = $_POST['role'];
                 $user['password'] = md5($_POST['password']);
-                self::$model->createNewUser($user);
+                $user['id'] = self::$model->createNewUser($user);
+
                 unset($_POST);
-                View::redirect('/login');
+                $_SESSION['authentication_request'] = 'created';
+                $user['two_factor_authentication_code'] = self::$model->updateAuthenticationCodeForUser($user['id']);
+                $emailVars = [
+                    'to' => $user['email'],
+                    'subject' => 'Email verification',
+                    'title' => 'Verify your email',
+                    'content' => 'Welcome to Invest-App! We are glad that you want to become a member. Follow the link below to verify your email.',
+                    'link_href' => PROTOCOL.'//'.HOSTNAME.'/authenticate/'.$user['id'].'-'.$user['two_factor_authentication_code'],
+                    'link_text' => 'Verify',
+                ];
+                if (self::sendEmail($emailVars)) {
+                    $vars = [
+                        'title' => 'Verify your email',
+                        'menu' => 'anon',
+                        'pageTitle' => 'Verify your email',
+                        'email' => $user['email'],
+                        'pageContent' => 'Follow the link in letter to verify your email address',
+                    ];
+                    View::render('emailSent', $vars);
+                } else {
+                    PageController::showErrorPage(404);
+                }
             } else {
                 $message = 'Email address is already taken';
                 $vars = [
