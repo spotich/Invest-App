@@ -11,7 +11,7 @@ class AuthenticationController
 {
     use EmailTrait;
 
-    private static UserModel $model;
+    public static UserModel $model;
 
     public function __construct()
     {
@@ -26,7 +26,7 @@ class AuthenticationController
             if (is_null($user)) {
                 $message = 'User not found';
                 $vars = [
-                    'title' => 'Sign in',
+                    'title' => 'Login',
                     'menu' => 'anon',
                     'message' => $message,
                 ];
@@ -40,7 +40,7 @@ class AuthenticationController
                         'subject' => 'Email verification',
                         'title' => 'Verify your email',
                         'content' => 'Someone was trying to enter your account. If it was you, follow the link below.',
-                        'link_href' => PROTOCOL.'//'.HOSTNAME.'/authenticate/'.$user['id'].'-'.$user['two_factor_authentication_code'],
+                        'link_href' => PROTOCOL.'//'.HOSTNAME.'/login/'.$user['id'].'-'.$user['two_factor_authentication_code'],
                         'link_text' => 'Verify',
                     ];
                     if (self::sendEmail($emailVars)) {
@@ -62,14 +62,18 @@ class AuthenticationController
             } else {
                 $message = 'Wrong password';
                 $vars = [
-                    'title' => 'Sign in',
+                    'title' => 'Login',
                     'menu' => 'anon',
                     'message' => $message,
                 ];
                 View::render('login', $vars);
             }
         } else {
-            View::redirect('/login');
+            $vars = [
+                'title' => 'Login',
+                'menu' => 'anon'
+            ];
+            View::render('login', $vars);
         }
     }
 
@@ -119,7 +123,7 @@ class AuthenticationController
                     'subject' => 'Email verification',
                     'title' => 'Verify your email',
                     'content' => 'Welcome to Invest-App! We are glad that you want to become a member. Follow the link below to verify your email.',
-                    'link_href' => PROTOCOL.'//'.HOSTNAME.'/authenticate/'.$user['id'].'-'.$user['two_factor_authentication_code'],
+                    'link_href' => PROTOCOL.'//'.HOSTNAME.'/login/'.$user['id'].'-'.$user['two_factor_authentication_code'],
                     'link_text' => 'Verify',
                 ];
                 if (self::sendEmail($emailVars)) {
@@ -137,14 +141,18 @@ class AuthenticationController
             } else {
                 $message = 'Email address is already taken';
                 $vars = [
-                    'title' => 'Sign up',
+                    'title' => 'Register',
                     'menu' => 'anon',
                     'message' => $message,
                 ];
-                View::render('signup', $vars);
+                View::render('register', $vars);
             }
         } else {
-            View::redirect('/signup');
+            $vars = [
+                'title' => 'Register',
+                'menu' => 'anon',
+            ];
+            View::render('register', $vars);
         }
     }
 }

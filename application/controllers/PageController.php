@@ -26,68 +26,26 @@ class PageController
 
     public static function showProfilePage(): void
     {
-        $userData = SessionController::getCurrentUserData();
-        if (is_null($userData)) {
-            View::redirect('/login');
-        } else {
-            $vars = [
-                'title' => 'Profile',
-                'menu' => 'auth',
-                'user' => $userData,
+        if (isset($_POST['oldPassword']) and isset($_POST['password']) and isset($_POST['repeatPassword'])) {
+            $passwords = [
+                'old' => $_POST['oldPassword'],
+                'new' => $_POST['password'],
             ];
-            View::render('profile', $vars);
-        }
-    }
-
-    public static function showLoginPage()
-    {
-        if (SessionController::isCurrentUserActive()) {
-            View::redirect('/profile');
+            $profileController = new ProfileController();
+            $profileController->updatePassword($passwords);
         } else {
-            $vars = [
-                'title' => 'Sign in',
-                'menu' => 'anon',
-                'message' => '',
-            ];
-            View::render('login', $vars);
+            $userData = SessionController::getCurrentUserData();
+            if (is_null($userData)) {
+                View::redirect('/login');
+            } else {
+                $vars = [
+                    'title' => 'Profile',
+                    'menu' => 'auth',
+                    'user' => $userData,
+                ];
+                View::render('profile', $vars);
+            }
         }
-    }
-
-    public static function showSignupPage()
-    {
-        if (SessionController::isCurrentUserActive()) {
-            View::redirect('/profile');
-        } else {
-            $vars = [
-                'title' => 'Sign up',
-                'menu' => 'anon',
-                'message' => '',
-            ];
-            View::render('signup', $vars);
-        }
-    }
-
-    public static function showRecoveryPage()
-    {
-        if (SessionController::isCurrentUserActive()) {
-            View::redirect('/profile');
-        } else {
-            $vars = [
-                'title' => 'Recovery',
-                'menu' => 'anon',
-                'message' => '',
-            ];
-            View::render('recovery', $vars);
-        }
-    }
-
-    public static function showNewPasswordPage() {
-        $vars = [
-            'title' => 'New password',
-            'menu' => 'anon',
-            'message' => '',
-        ];
-        View::render('newPassword', $vars);
     }
 
     public static function showErrorPage($code): void

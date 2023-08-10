@@ -16,32 +16,17 @@ return [
         'action' => 'showProfilePage',
     ],
 
-    '/^login$/' => [
-        'controller' => PageController::class,
-        'action' => 'showLoginPage',
-    ],
-
-    '/^signup$/' => [
-        'controller' => PageController::class,
-        'action' => 'showSignupPage',
-    ],
-
-    '/^recovery$/' => [
-        'controller' => PageController::class,
-        'action' => 'showRecoveryPage',
-    ],
-
     '/^register$/' => [
         'controller' => AuthenticationController::class,
         'action' => 'registerUser',
     ],
 
-    '/^authenticate$/' => [
+    '/^login$/' => [
         'controller' => AuthenticationController::class,
         'action' => 'createAuthenticationRequest',
     ],
 
-    '/^authenticate\/(\d+-[a-zA-Z0-9]{40})$/' => [
+    '/^login\/(\d+-[a-zA-Z0-9]{40})$/' => [
         'controller' => AuthenticationController::class,
         'action' => 'processAuthenticationRequest',
     ],
@@ -59,10 +44,5 @@ return [
     '/^logout$/' => [
         'controller' => SessionController::class,
         'action' => 'clearCurrentUserData',
-    ],
-
-    '/^newPassword$/' => [
-        'controller' => PageController::class,
-        'action' => 'showNewPasswordPage',
     ],
 ];
