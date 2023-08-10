@@ -88,14 +88,15 @@ class RecoveryController
                     $resetData = self::$model->getResetDataForUser($user_id);
 
                     if (!$resetData) {
-                        echo 'reset_code doesnt exist';
+                        echo 'Reset code doesnt exist';
                         exit;
                     } elseif ($resetData[0]['reset_code'] == $_SESSION['reset_code'] and $resetData[0]['expiration_time'] > date('Y-m-d H:i:s', time())) {
                         unset($_SESSION['reset_request']);
                         $_SESSION['verified'] = true;
                         View::redirect('/recover');
                     } else {
-                        echo 'reset_code inactive';
+                        echo 'Reset code is inactive';
+                        exit;
                     }
                 } else {
                     echo 'Wrong authentication code';
