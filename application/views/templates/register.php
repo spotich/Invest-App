@@ -37,7 +37,7 @@
                             <div class="row mb-5">
                                 <div class="col has-validation position-relative">
                                     <input required id="email" type="email" class="form-control form-control-lg"
-                                           placeholder="Email" name="email" pattern="(?!.{51})[a-z0-9]+@[a-z]+\.[a-z]{2,3}" autocomplete="email">
+                                           placeholder="Email" name="email" pattern="(?!.{51})[a-z0-9_]+@[a-z]+\.[a-z]{2,3}" autocomplete="email">
                                     <div class="valid-tooltip">
                                         OK
                                     </div>
