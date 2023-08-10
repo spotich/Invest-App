@@ -21,17 +21,25 @@ class RecoveryController
 
     public static function createRecoverRequest()
     {
-        if (isset($_POST['email'])) {
+        if (isset($_SESSION['verified']) and $_SESSION['verified']) {
+            unset($_SESSION['verified']);
+            $vars = [
+                'title' => 'New password',
+                'menu' => 'anon',
+            ];
+            View::render('newPassword', $vars);
+        } elseif (isset($_POST['email'])) {
             $user = self::$model->getUserByEmail($_POST['email']);
             if (is_null($user)) {
                 $message = 'User not found';
                 $vars = [
-                    'title' => 'Recover',
+                    'title' => 'Recovery',
                     'menu' => 'anon',
                     'message' => $message,
                 ];
                 View::render('recover', $vars);
             } else {
+                $_SESSION['email'] = $_POST['email'];
                 $_SESSION['reset_request'] = 'created';
                 $_SESSION['reset_code'] = self::$model->createResetCodeForUser($user['id']);
                 $emailVars = [
@@ -44,7 +52,7 @@ class RecoveryController
                 ];
                 if (self::sendEmail($emailVars)) {
                     $vars = [
-                        'title' => 'Email sent',
+                        'title' => 'Recovery',
                         'menu' => 'anon',
                         'pageTitle' => 'Check your email',
                         'email' => $user['email'],
@@ -55,6 +63,17 @@ class RecoveryController
                     PageController::showErrorPage(404);
                 }
             }
+        } elseif (isset($_POST['password']) and isset($_POST['repeatPassword']) and isset($_SESSION['email'])) {
+            $user = self::$model->getUserByEmail($_SESSION['email']);
+            self::$model->updatePasswordForUser(md5($_POST['password']), $user['id']);
+            SessionController::setCurrentUserData($user);
+            View::redirect('/profile');
+        } else {
+            $vars = [
+                'title' => 'Recovery',
+                'menu' => 'anon',
+            ];
+            View::render('recover', $vars);
         }
     }
 
@@ -73,7 +92,8 @@ class RecoveryController
                         exit;
                     } elseif ($resetData[0]['reset_code'] == $_SESSION['reset_code'] and $resetData[0]['expiration_time'] > date('Y-m-d H:i:s', time())) {
                         unset($_SESSION['reset_request']);
-                        View::redirect('/newPassword');
+                        $_SESSION['verified'] = true;
+                        View::redirect('/recover');
                     } else {
                         echo 'reset_code inactive';
                     }

@@ -68,4 +68,12 @@ class UserModel extends Model
         $this->db->executeQuery('DELETE FROM resets WHERE user_id=:user_id', $params);
         return $result;
     }
+
+    public function updatePasswordForUser(string $password, int $id) {
+        $params = [
+            'id' => $id,
+            'password' => $password,
+        ];
+        $this->db->executeQuery('UPDATE users SET password=:password WHERE id=:id', $params);
+    }
 }
