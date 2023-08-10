@@ -15,7 +15,7 @@
                             <div class="row mb-5">
                                 <div class="col has-validation position-relative">
                                     <input required id="name" type="text" class="form-control form-control-lg col me-4"
-                                           placeholder="Name" name="name" pattern="[A-Z][a-z]{1,29}" autocomplete="">
+                                           placeholder="Name" name="name" pattern="[A-Z][a-z]{1,29}" autocomplete="given-name">
                                     <div class="valid-tooltip">
                                         OK
                                     </div>
@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="col has-validation position-relative">
                                     <input required id="surname" type="text" class="form-control form-control-lg col"
-                                           placeholder="Surname" name="surname" pattern="[A-Z][a-z]{1,29}">
+                                           placeholder="Surname" name="surname" pattern="[A-Z][a-z]{1,29}" autocomplete="family-name">
                                     <div class="valid-tooltip">
                                         OK
                                     </div>
@@ -37,7 +37,7 @@
                             <div class="row mb-5">
                                 <div class="col has-validation position-relative">
                                     <input required id="email" type="email" class="form-control form-control-lg"
-                                           placeholder="Email" name="email" pattern="(?!.{51})[a-z0-9]+@[a-z]+\.[a-z]{2,3}">
+                                           placeholder="Email" name="email" pattern="(?!.{51})[a-z0-9]+@[a-z]+\.[a-z]{2,3}" autocomplete="email">
                                     <div class="valid-tooltip">
                                         OK
                                     </div>
@@ -55,7 +55,7 @@
                             <div class="row mb-5">
                                 <div class="col has-validation position-relative">
                                     <input required id="password" type="password" class="form-control form-control-lg col me-4"
-                                           placeholder="Password" name="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}">
+                                           placeholder="Password" name="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}" onkeyup="comparePassword()">
                                     <div class="valid-tooltip">
                                         OK
                                     </div>
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col has-validation position-relative">
                                     <input required id="repeatPassword" type="password"
-                                           class="form-control form-control-lg col" placeholder="Repeat password" name="repeatPassword">
+                                           class="form-control form-control-lg col" placeholder="Repeat password" name="repeatPassword" onkeyup="comparePassword()">
                                     <div class="valid-tooltip">
                                         OK
                                     </div>

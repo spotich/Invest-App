@@ -31,7 +31,7 @@
                 <img class="icon" src="img/login.png">
                 Sign in
             </button>
-            <button type="button" class="btn btn-lg btn-primary px-4 me-3" onclick="location.href='/signup'">
+            <button type="button" class="btn btn-lg btn-primary px-4 me-3" onclick="location.href='/register'">
                 <img class="icon" src="img/add-friend.png">
                 Join us
             </button>

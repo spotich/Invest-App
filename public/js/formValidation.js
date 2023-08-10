@@ -5,22 +5,23 @@
     Array.prototype.slice.call(forms)
         .forEach(function (form) {
             form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
+                if (!form.checkValidity() || (!comparePassword() && document.getElementById("repeatPassword") !== null)) {
                     event.preventDefault()
                     event.stopPropagation()
                 }
-
-                let repeatPassword = document.getElementById("repeatPassword");
-                if (document.getElementById("password").value && repeatPassword.value !== document.getElementById("password").value) {
-                    repeatPassword.setCustomValidity("Passwords do not match");
-                } else {
-                    repeatPassword.setCustomValidity("");
-                }
-
                 form.classList.add('was-validated')
             }, false)
         })
 })()
 
-
-
+function comparePassword() {
+    if (document.getElementById('password').value !== '' && document.getElementById('repeatPassword').value !== '') {
+        if (document.getElementById('password').value === document.getElementById('repeatPassword').value) {
+            document.getElementById('repeatPassword').setCustomValidity("");
+            return true;
+        } else {
+            document.getElementById('repeatPassword').setCustomValidity("Passwords do not match");
+            return false;
+        }
+    }
+}
