@@ -38,21 +38,21 @@ class Router
 
     public static function run(): void
     {
+        $container = new DIContainer();
         if (Router::match()) {
             $Controller = Router::$params['controller'];
             $action = Router::$params['action'];
-
             if (class_exists($Controller) and method_exists($Controller, $action)) {
-
-                $controller = new $Controller;
+                if ($container->has($Controller)) {
+                    $controller = $container->get($Controller);
+                }
                 $reflection = new \ReflectionMethod($Controller, $action);
                 $actionParametersCount = $reflection->getNumberOfParameters();
-
                 if ($actionParametersCount === 1 and isset(Router::$params['argument'])) {
                     $argument = Router::$params['argument'];
-                    $controller->$action($argument);
+                    isset($controller) ? $controller->$action($argument) : $Controller::$action($argument);
                 } else {
-                    $controller->$action();
+                    isset($controller) ? $controller->$action() : $Controller::$action();
                 }
             } else {
                 View::errorCode(404);
