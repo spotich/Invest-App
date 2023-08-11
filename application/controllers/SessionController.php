@@ -22,7 +22,7 @@ class SessionController
         return $userData;
     }
 
-    public static function setCurrentUserData($currentUser): bool
+    public static function setCurrentUserData(array $currentUser): bool
     {
         $ok = (isset($currentUser['name']) and isset($currentUser['surname']) and isset($currentUser['email']) and isset($currentUser['password']));
         if ($ok) {

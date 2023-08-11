@@ -4,16 +4,28 @@ use application\controllers\PageController;
 use application\controllers\AuthenticationController;
 use application\controllers\SessionController;
 use application\controllers\RecoveryController;
+use application\controllers\ProfileController;
+use application\controllers\ProjectController;
 
 return [
     '/^$/' => [
         'controller' => PageController::class,
-        'action' => 'showHomePage',
+        'action' => 'showHome',
+    ],
+
+    '/^projects$/' => [
+        'controller' => ProjectController::class,
+        'action' => 'showProjects',
+    ],
+
+    '/^projects\/(\d+)$/' => [
+        'controller' => ProjectController::class,
+        'action' => 'showDetailedProject',
     ],
 
     '/^profile$/' => [
-        'controller' => PageController::class,
-        'action' => 'showProfilePage',
+        'controller' => ProfileController::class,
+        'action' => 'showProfile',
     ],
 
     '/^register$/' => [
