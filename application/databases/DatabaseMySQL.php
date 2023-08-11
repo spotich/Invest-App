@@ -1,13 +1,13 @@
 <?php
 
 namespace application\databases;
-use application\contracts\DatabaseInterface;
+use application\contracts\Database;
 use PDO;
 use PDOStatement;
 
-class DatabaseMySQL implements DatabaseInterface
+abstract class DatabaseMySQL implements Database
 {
-    private $db;
+    public $db;
 
     public function __construct()
     {

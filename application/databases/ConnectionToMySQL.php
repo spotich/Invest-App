@@ -2,10 +2,9 @@
 
 namespace application\databases;
 
-use application\contracts\ConnectionInterface;
 use PDO;
 
-class ConnectionToMySQL implements ConnectionInterface
+class ConnectionToMySQL
 {
     private static $conn = null;
 

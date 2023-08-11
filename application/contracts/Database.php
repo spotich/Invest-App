@@ -2,7 +2,7 @@
 
 namespace application\contracts;
 
-interface DatabaseInterface
+interface Database
 {
     public function executeQuery($query, $params = []);
     public function getRow($query, $params = []);
