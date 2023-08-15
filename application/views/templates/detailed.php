@@ -13,7 +13,7 @@
                         <div class="border border-2 rounded-3 p-4 mb-4">
                             <img src="/img/users/<?php echo $team_member['avatar']; ?>"
                                  class="img-fluid rounded-3 mb-3">
-                            <h4><b><?php echo $team_member['name']; ?><?php echo $team_member['surname']; ?></b></h4>
+                            <h4><b><?php echo $team_member['name']; ?> <?php echo $team_member['surname']; ?></b></h4>
                             <h5><?php echo $team_member['role']; ?></h5>
                             <p><?php echo $team_member['description']; ?></p>
                         </div>
