@@ -12,44 +12,44 @@
                 <?php if ($user["role"] === 'Admin'): ?>
                     <li class="nav-item me-3 py-2 px-4 my-2 my-lg-0">
                         <a class="nav-link" href="/projects" draggable="false">
-                            <img class="icon" src="img/shuttle.png">
+                            <img class="icon" src="../img/shuttle.png">
                             Projects
                         </a>
                     </li>
                     <li class="nav-item me-3 py-2 px-4 mb-2 mb-lg-0">
                         <a class="nav-link" href="/users" draggable="false">
-                            <img class="icon" src="img/group.png">
+                            <img class="icon" src="../img/group.png">
                             Users
                         </a>
                     </li>
                     <li class="nav-item me-3 py-2 px-4 mb-2 mb-lg-0">
                         <a class="nav-link" href="/requests" draggable="false">
-                            <img class="icon" src="img/no.png">
+                            <img class="icon" src="../img/no.png">
                             Requests
                         </a>
                     </li>
                     <li class="nav-item me-3 py-2 px-4 mb-3 mb-lg-0">
                         <a class="nav-link" href="/profile" draggable="false">
-                            <img class="icon" src="img/website.png">
+                            <img class="icon" src="../img/website.png">
                             Profile
                         </a>
                     </li>
                 <?php else: ?>
                     <li class="nav-item me-3 py-2 px-4 my-2 my-lg-0">
                         <a class="nav-link" href="/projects" draggable="false">
-                            <img class="icon" src="img/shuttle.png">
+                            <img class="icon" src="../img/shuttle.png">
                             Projects
                         </a>
                     </li>
                     <li class="nav-item me-3 py-2 px-4 mb-2 mb-lg-0">
                         <a class="nav-link" href="/analytics" draggable="false">
-                            <img class="icon" src="img/diagram.png">
+                            <img class="icon" src="../img/diagram.png">
                             Analytics
                         </a>
                     </li>
                     <li class="nav-item me-3 py-2 px-4 mb-3 mb-lg-0">
                         <a class="nav-link" href="/profile" draggable="false">
-                            <img class="icon" src="img/website.png">
+                            <img class="icon" src="../img/website.png">
                             Profile
                         </a>
                     </li>
@@ -57,7 +57,7 @@
             </ul>
             <div class="d-flex me-3 align-items-center">
                 <a href="/profile" draggable="false">
-                    <img class="avatar flex-shrink-0" src="img/person.jpg">
+                    <img class="avatar flex-shrink-0" src="../img/users/<?php echo $user['avatar']; ?>">
                 </a>
                 <div class="container me-3">
                     <div class="row gx-0">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <a class="nav-link" href="/logout" draggable="false">
-                    <img class="icon" src="img/logout.png">
+                    <img class="icon" src="../img/logout.png">
                 </a>
             </div>
         </div>

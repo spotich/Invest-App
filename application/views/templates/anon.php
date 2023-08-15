@@ -10,29 +10,29 @@
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item me-3 py-2 px-4 my-2 my-lg-0">
                     <a class="nav-link" href="/projects" draggable="false">
-                        <img class="icon" src="img/shuttle.png">
+                        <img class="icon" src="../img/shuttle.png">
                         Projects
                     </a>
                 </li>
                 <li class="nav-item me-3 py-2 px-4 mb-2 mb-lg-0">
                     <a class="nav-link" href="/analytics" draggable="false">
-                        <img class="icon" src="img/diagram.png">
+                        <img class="icon" src="../img/diagram.png">
                         Analytics
                     </a>
                 </li>
                 <li class="nav-item me-3 py-2 px-4 mb-3 mb-lg-0">
                     <a class="nav-link" href="/profile" draggable="false">
-                        <img class="icon" src="img/website.png">
+                        <img class="icon" src="../img/website.png">
                         Profile
                     </a>
                 </li>
             </ul>
             <button type="button" class="btn btn-lg btn-light me-3 px-4" onclick="location.href='/login'">
-                <img class="icon" src="img/login.png">
+                <img class="icon" src="../img/login.png">
                 Sign in
             </button>
             <button type="button" class="btn btn-lg btn-primary px-4 me-3" onclick="location.href='/register'">
-                <img class="icon" src="img/add-friend.png">
+                <img class="icon" src="../img/add-friend.png">
                 Join us
             </button>
         </div>
