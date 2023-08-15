@@ -1,13 +1,13 @@
-<div class="container">
+<div class="container-lg">
     <h1 class="pageName">Discover projects</h1>
     <div class="container projects">
         <?php foreach($projects as $project): ?>
             <a href="projects/<?php echo $project['id']; ?>" draggable="false">
                 <div class="container row border border-2 rounded-3 mb-4 px-5 py-4">
-                    <div class="col-xl-6 col-xxl container">
+                    <div class="col-xl-6 col-xxl container mb-4 mb-xl-0">
                         <img src="img/projects/<?php echo $project['cover']; ?>" class="img-fluid w-100">
                     </div>
-                    <div class="col-xl-6 col-xxl align-self-center">
+                    <div class="col-xl-6 col-xxl align-self-center mb-4 mb-xl-0">
                         <div class="row mb-3">
                             <h2><?php echo $project['name']; ?></h2>
                         </div>
@@ -20,7 +20,7 @@
                         <div class="row mb-3">
                             <h2>Category</h2>
                         </div>
-                        <div class="row row-cols-auto mb-4">
+                        <div class="row row-cols-auto mb-2">
                             <?php uasort($project['tags'], function ($a, $b) {
                                 if (strlen($a) === strlen($b)) {
                                     return 0;
