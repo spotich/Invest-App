@@ -7,7 +7,10 @@
                 <div class="form-group row mb-5">
                     <div class="col-2"></div>
                     <div class="col-8">
-                        <img class="profile-pic mb-5" src="img/person.jpg">
+                        <div class="container">
+                            <img class="mg-fluid w-75 border border-2 rounded-3 mb-5" src="img/users/<?php echo $user['avatar']; ?>">
+                        </div>
+
                         <?php if ($message !== ''): ?>
                             <p class="error"><?php echo $message; ?></p>
                         <?php endif; ?>

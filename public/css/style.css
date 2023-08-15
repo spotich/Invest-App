@@ -111,24 +111,16 @@ form a {
     font-family: Inter, sans-serif;
     font-size: 90px;
     font-weight: bold;
-    margin-bottom: 3%;
+    margin-bottom: 3rem;
     opacity: 0.3;
-}
-
-.profile-pic {
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    object-fit: cover;
-    width: 450px;
-    height: 350px;
 }
 
 .avatar {
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 5px;
     object-fit: cover;
-    width: 77px;
-    height: 60px;
+    width: 75px;
+    height: 70px;
 }
 
 .role {
@@ -151,4 +143,35 @@ form a {
     color: green;
     opacity: 0.6;
     font-weight: bold;
+}
+
+.projects {
+    margin-top: 5em;
+}
+
+.projects a {
+    text-decoration: none;
+    color: black;
+}
+
+.projects h2 {
+    opacity: 0.3;
+    font-size: 3em;
+}
+
+.projects h3 {
+    opacity: 0.3;
+    font-size: 1em;
+}
+
+.project h2, h3 {
+    opacity: 0.3;
+}
+
+.project h4, h5, p {
+    opacity: 0.8;
+}
+
+.project .progress {
+    height: 48px;
 }

@@ -12,6 +12,7 @@ class User
     public string $email;
     public string $role;
     public string $password;
+    public string $avatar;
     private static UserRepository $userRepo;
 
     public static function init(UserRepository $userRepo): void
@@ -29,6 +30,12 @@ class User
     {
         $userArray = self::$userRepo->getUserByEmail($email);
         return is_null($userArray) ? null : self::deserializeFromArray($userArray);
+    }
+
+    public function getAvatar(): void
+    {
+        $avatar = self::$userRepo->getUserAvatar($this->id);
+        $this->avatar = $avatar;
     }
 
     public function is_expired(): bool
@@ -84,6 +91,7 @@ class User
         if (isset($data['email']) and is_string($data['email'])) $user->email = $data['email'];
         if (isset($data['role']) and is_string($data['role'])) $user->role = $data['role'];
         if (isset($data['password']) and is_string($data['password'])) $user->password = $data['password'];
+        if (isset($data['avatar']) and is_string($data['avatar'])) $user->avatar = $data['avatar'];
         return $user;
     }
 
@@ -96,6 +104,7 @@ class User
         if (isset($this->email)) $result['email'] = $this->email;
         if (isset($this->role)) $result['role'] = $this->role;
         if (isset($this->password)) $result['password'] = $this->password;
+        if (isset($this->avatar)) $result['avatar'] = $this->avatar;
         return $result;
     }
 }

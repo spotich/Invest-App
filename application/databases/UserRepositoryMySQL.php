@@ -10,15 +10,26 @@ class UserRepositoryMySQL extends DatabaseMySQL implements UserRepository
 {
     public function getUserByEmail(string $email): ?array
     {
-        $params = ['email' => $email];
+        $params = [
+            'email' => $email,
+            ];
         $result = $this->getRow('SELECT * FROM users WHERE email = :email', $params);
         return is_array($result) ? $result[0] : null;
+    }
+
+    public function getUserAvatar($id): ?string
+    {
+        $params = [
+            'id' => $id,
+        ];
+        $result = $this->getRow('SELECT ua.name as avatar FROM users u JOIN user_avatars ua ON u.id = ua.user_id WHERE u.id = :id', $params);
+        return is_array($result) ? $result[0]['avatar'] : null;
     }
 
     public function getUserById(int $id): ?array
     {
         $params = ['id' => $id];
-        $result = $this->getRow('SELECT * FROM users WHERE id = :id', $params);
+        $result = $this->getRow('SELECT u.*, ua.name as avatar FROM users u JOIN user_avatars ua ON u.id = ua.user_id WHERE u.id = :id', $params);
         return is_array($result) ? $result[0] : null;
     }
 
@@ -29,27 +40,31 @@ class UserRepositoryMySQL extends DatabaseMySQL implements UserRepository
             $this->executeQuery('INSERT INTO users (name, surname, email, role, password) VALUES (:name, :surname, :email, :role, :password)', $user);
             $code = bin2hex(random_bytes(20));
             $id = $this->getUserByEmail($user['email'])['id'];
+
             $params = [
                 'user_id' => $id,
                 'code' => $code,
             ];
             $this->executeQuery('INSERT INTO authentications (code, user_id) VALUES (:code, :user_id)', $params);
+            unset($params['code']);
+            $params['name'] = 'person.jpg';
+            $this->executeQuery('INSERT INTO user_avatars (user_id, name) VALUES (:user_id, :name)', $params);
         }
         return is_int($id) ? $id : null;
     }
 
-    public function getAuthenticationDataForUser(int $id): ?array {
+    public function getAuthenticationDataForUser(int $id): ?array
+    {
         $params = [
             'user_id' => $id,
         ];
         $result = $this->getRow('SELECT code, expiration_time FROM authentications WHERE user_id=:user_id', $params);
-        var_dump($result);
         return is_array($result) ? $result[0] : null;
     }
 
     public function updateUser(array $user): ?bool
     {
-        $ok = (isset($user['id']) and (isset($user['name'])  or isset($user['surname']) or isset($user['email']) or isset($user['role']) or isset($user['password'])));
+        $ok = (isset($user['id']) and (isset($user['name']) or isset($user['surname']) or isset($user['email']) or isset($user['role']) or isset($user['password'])));
         if ($ok) {
             $id = $user['id'];
             unset($user['id']);
@@ -74,10 +89,10 @@ class UserRepositoryMySQL extends DatabaseMySQL implements UserRepository
     {
         $code = bin2hex(random_bytes(20));
         $params = [
-            'id' => $id,
-            'two_factor_authentication_code' => $code,
+            'user_id' => $id,
+            'code' => $code,
         ];
-        $result = $this->executeQuery('UPDATE users SET two_factor_authentication_code = :two_factor_authentication_code WHERE id = :id', $params);
+        $result = $this->executeQuery('UPDATE authentications SET code = :code WHERE user_id = :user_id', $params);
         if ($result === false) {
             return null;
         } else {
@@ -88,7 +103,7 @@ class UserRepositoryMySQL extends DatabaseMySQL implements UserRepository
     public function newExpirationTimeForUser(int $id)
     {
         $expiry = 7 * 24 * 60 * 60; // 1 week
-        $time = date('Y-m-d H:i:s',  time() + $expiry);
+        $time = date('Y-m-d H:i:s', time() + $expiry);
         $params = [
             'user_id' => $id,
             'expiration_time' => $time,
@@ -102,7 +117,7 @@ class UserRepositoryMySQL extends DatabaseMySQL implements UserRepository
     public function newResetCodeForUser(int $id): ?string
     {
         $expiry = 5 * 60; // 5 min
-        $expiration_time = date('Y-m-d H:i:s',  time() + $expiry);
+        $expiration_time = date('Y-m-d H:i:s', time() + $expiry);
         $reset_code = bin2hex(random_bytes(20));
         $params = [
             'user_id' => $id,

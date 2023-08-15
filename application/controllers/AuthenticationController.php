@@ -47,6 +47,7 @@ class AuthenticationController
                         PageController::showError(404);
                     }
                 } else {
+                    $user->getAvatar();
                     SessionController::setCurrentUserData($user->serializeToArray());
                     View::redirect('/');
                 }
