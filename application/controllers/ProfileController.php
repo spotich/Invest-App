@@ -1,9 +1,9 @@
 <?php
 
-namespace application\controllers;
+namespace InvestApp\application\controllers;
 
-use application\core\View;
-use application\models\User;
+use InvestApp\application\core\View;
+use InvestApp\application\models\User;
 
 class ProfileController
 {

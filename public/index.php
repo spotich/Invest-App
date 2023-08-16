@@ -3,12 +3,12 @@
 require '../application/config/constants.php';
 
 spl_autoload_register(function ($class) {
-    $name = str_replace('\\', '/', $class);
+    $name = explode(NAMESPACE_NAME, str_replace('\\', '/', $class))[1];
     $file = dirname(__DIR__, 1) . '/' . $name . '.php';
     require $file;
 });
 
-use application\core\Router;
+use InvestApp\application\core\Router;
 
 session_start();
 Router::bindRoutes();

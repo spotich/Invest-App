@@ -1,6 +1,6 @@
 <?php
 
-namespace application\core;
+namespace InvestApp\application\core;
 use \ReflectionParameter;
 
 class Router

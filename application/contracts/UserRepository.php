@@ -1,6 +1,6 @@
 <?php
 
-namespace application\contracts;
+namespace InvestApp\application\contracts;
 
 interface UserRepository extends Database
 {

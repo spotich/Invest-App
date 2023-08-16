@@ -1,11 +1,11 @@
 <?php
 
-use application\controllers\PageController;
-use application\controllers\AuthenticationController;
-use application\controllers\SessionController;
-use application\controllers\RecoveryController;
-use application\controllers\ProfileController;
-use application\controllers\ProjectController;
+use InvestApp\application\controllers\PageController;
+use InvestApp\application\controllers\AuthenticationController;
+use InvestApp\application\controllers\SessionController;
+use InvestApp\application\controllers\RecoveryController;
+use InvestApp\application\controllers\ProfileController;
+use InvestApp\application\controllers\ProjectController;
 
 return [
     '/^$/' => [

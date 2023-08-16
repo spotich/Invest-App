@@ -1,8 +1,8 @@
 <?php
 
-namespace application\models;
+namespace InvestApp\application\models;
 
-use application\contracts\ProjectRepository;
+use InvestApp\application\contracts\ProjectRepository;
 
 class Project
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace application\databases;
+namespace InvestApp\application\databases;
 
 use PDO;
 

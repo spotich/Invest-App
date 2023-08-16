@@ -1,8 +1,8 @@
 <?php
 
-namespace application\controllers;
+namespace InvestApp\application\controllers;
 
-use application\core\View;
+use InvestApp\application\core\View;
 
 class PageController
 {

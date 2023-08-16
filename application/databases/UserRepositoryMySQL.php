@@ -1,8 +1,8 @@
 <?php
 
-namespace application\databases;
+namespace InvestApp\application\databases;
 
-use application\contracts\UserRepository;
+use InvestApp\application\contracts\UserRepository;
 
 date_default_timezone_set('Asia/Novosibirsk');
 

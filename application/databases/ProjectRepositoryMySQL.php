@@ -1,8 +1,8 @@
 <?php
 
-namespace application\databases;
+namespace InvestApp\application\databases;
 
-use application\contracts\ProjectRepository;
+use InvestApp\application\contracts\ProjectRepository;
 class ProjectRepositoryMySQL extends DatabaseMySQL implements ProjectRepository
 {
     public function getAllProjects(): ?array

@@ -1,7 +1,7 @@
 <?php
 
-namespace application\databases;
-use application\contracts\Database;
+namespace InvestApp\application\databases;
+use InvestApp\application\contracts\Database;
 use PDO;
 use PDOStatement;
 

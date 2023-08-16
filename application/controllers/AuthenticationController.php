@@ -1,10 +1,10 @@
 <?php
 
-namespace application\controllers;
+namespace InvestApp\application\controllers;
 
-use application\core\View;
-use application\traits\EmailTrait;
-use application\models\User;
+use InvestApp\application\core\View;
+use InvestApp\application\traits\EmailTrait;
+use InvestApp\application\models\User;
 
 class AuthenticationController
 {

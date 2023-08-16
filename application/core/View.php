@@ -1,6 +1,6 @@
 <?php
 
-namespace application\core;
+namespace InvestApp\application\core;
 
 use JetBrains\PhpStorm\NoReturn;
 

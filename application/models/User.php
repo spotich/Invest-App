@@ -1,8 +1,8 @@
 <?php
 
-namespace application\models;
+namespace InvestApp\application\models;
 
-use application\contracts\UserRepository;
+use InvestApp\application\contracts\UserRepository;
 
 class User
 {

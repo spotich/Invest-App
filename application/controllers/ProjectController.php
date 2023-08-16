@@ -1,9 +1,9 @@
 <?php
 
-namespace application\controllers;
+namespace InvestApp\application\controllers;
 
-use application\models\Project;
-use application\core\View;
+use InvestApp\application\models\Project;
+use InvestApp\application\core\View;
 
 class ProjectController
 {

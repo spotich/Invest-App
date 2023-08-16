@@ -1,6 +1,6 @@
 <?php
 
-namespace application\traits;
+namespace InvestApp\application\traits;
 
 trait EmailTrait
 {

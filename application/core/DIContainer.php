@@ -1,17 +1,17 @@
 <?php
 
-namespace application\core;
+namespace InvestApp\application\core;
 
-use application\contracts\UserRepository;
-use application\contracts\ProjectRepository;
-use application\controllers\AuthenticationController;
-use application\controllers\ProfileController;
-use application\controllers\ProjectController;
-use application\controllers\RecoveryController;
-use application\databases\ProjectRepositoryMySQL;
-use application\databases\UserRepositoryMySQL;
-use application\models\User;
-use application\models\Project;
+use InvestApp\application\contracts\UserRepository;
+use InvestApp\application\contracts\ProjectRepository;
+use InvestApp\application\controllers\AuthenticationController;
+use InvestApp\application\controllers\ProfileController;
+use InvestApp\application\controllers\ProjectController;
+use InvestApp\application\controllers\RecoveryController;
+use InvestApp\application\databases\ProjectRepositoryMySQL;
+use InvestApp\application\databases\UserRepositoryMySQL;
+use InvestApp\application\models\User;
+use InvestApp\application\models\Project;
 
 class DIContainer
 {
