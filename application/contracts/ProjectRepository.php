@@ -2,7 +2,7 @@
 
 namespace InvestApp\application\contracts;
 
-interface ProjectRepository extends Database
+interface ProjectRepository extends Repository
 {
     public function getAllProjects(): array|null;
     public function getProjectById(int $id): array|null;
