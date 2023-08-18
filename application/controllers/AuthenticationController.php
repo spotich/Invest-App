@@ -2,144 +2,97 @@
 
 namespace InvestApp\application\controllers;
 
-use InvestApp\application\core\View;
-use InvestApp\application\traits\EmailTrait;
+use InvestApp\application\views\ConfirmationView;
+use InvestApp\application\traits\FetchingGuestDataTrait;
+use InvestApp\application\views\AuthenticationView;
+use InvestApp\application\traits\SendingEmailTrait;
 use InvestApp\application\models\User;
+use InvestApp\application\views\MenuView;
+use InvestApp\application\views\PageView;
+use stdClass;
 
 class AuthenticationController
 {
-    use EmailTrait;
+    use SendingEmailTrait;
+    use FetchingGuestDataTrait;
 
-    public function createAuthenticationRequest(): void
+    private ?User $user = null;
+    private ?stdClass $guest = null;
+    private MenuView $menuView;
+    private AuthenticationView $authenticationView;
+    private ConfirmationView $confirmationView;
+    private PageView $pageView;
+
+    public function __construct()
     {
-        if (isset($_POST['email']) and isset($_POST['password'])) {
-            $user = User::findByEmail($_POST['email']);
-            if (is_null($user)) {
-                $message = 'User not found';
-                $vars = [
-                    'title' => 'Login',
-                    'menu' => 'anon',
-                    'message' => $message,
-                ];
-                View::render('login', $vars);
-            } elseif (md5($_POST['password']) === $user->password) {
-                if ($user->is_expired()) {
-                    $_SESSION['authentication_request'] = 'created';
-                    $code = $user->newAuthenticationCode();
-                    $emailVars = [
-                        'to' => $user->email,
-                        'subject' => 'Email verification',
-                        'title' => 'Verify your email',
-                        'content' => 'Someone was trying to enter your account. If it was you, follow the link below.',
-                        'link_href' => PROTOCOL.'//'.HOSTNAME.'/login/'.$user->id.'-'.$code,
-                        'link_text' => 'Verify',
-                    ];
-                    if (self::sendEmail($emailVars)) {
-                        $vars = [
-                            'title' => 'Verify your email',
-                            'menu' => 'anon',
-                            'pageTitle' => 'Verify your email',
-                            'email' => $user->email,
-                            'pageContent' => 'Follow the link in letter to verify your email address',
-                        ];
-                        View::render('emailSent', $vars);
-                    } else {
-                        PageController::showError(404);
-                    }
-                } else {
-                    $user->getAvatar();
-                    SessionController::setCurrentUserData($user->serializeToArray());
-                    View::redirect('/');
-                }
-            } else {
-                $message = 'Wrong password';
-                $vars = [
-                    'title' => 'Login',
-                    'menu' => 'anon',
-                    'message' => $message,
-                ];
-                View::render('login', $vars);
-            }
-        } else {
-            $vars = [
-                'title' => 'Login',
-                'menu' => 'anon'
-            ];
-            View::render('login', $vars);
-        }
+        $this->menuView = new MenuView($this->user);
+        $this->authenticationView = new AuthenticationView();
+        $this->pageView = new PageView();
+        $this->confirmationView = new ConfirmationView();
     }
 
-    public function processAuthenticationRequest($verificationCombination)
+    public function index(): void
     {
-        if ($_SESSION['authentication_request'] === 'created') {
-            $pattern = '/^(\d+)-([a-zA-Z0-9]{40})$/';
-            if (preg_match($pattern, $verificationCombination, $matches)) {
-                $id = $matches[1];
-                $code = $matches[2];
-                $user = User::findById($id);
-                if ($user->getAuthenticationCode() === $code) {
-                    $user->newExpirationTime();
-                    SessionController::setCurrentUserData($user->serializeToArray());
-                    unset($_SESSION['request']);
-                    View::redirect('/profile');
-                } else {
-                    echo 'Wrong authentication code';
-                    exit;
-                }
-            } else {
-                PageController::showError(404);
-            }
-        } else {
-            PageController::showError(404);
+        $this->guest = $this->fetchGuestData();
+        if (is_null($this->guest)) {
+            $this->pageView->renderPage('Login', $this->menuView->getMenu(), $this->authenticationView->getContent());
+            return;
         }
+
+        $this->user = User::findByEmail($this->guest->email);
+        if (is_null($this->user)) {
+            $this->authenticationView->setMessage('User not found');
+            $this->pageView->renderPage('Login', $this->menuView->getMenu(), $this->authenticationView->getContent());
+            return;
+        }
+
+        if (md5($this->guest->password) !== $this->user->password) {
+            $this->authenticationView->setMessage('Wrong password');
+            $this->pageView->renderPage('Login', $this->menuView->getMenu(), $this->authenticationView->getContent());
+            return;
+        }
+
+        $this->authenticateUser();
     }
 
-    public function registerUser(): void
+    private function authenticateUser(): void
     {
-        if (isset($_POST['name']) and isset($_POST['surname']) and isset($_POST['email']) and isset($_POST['role']) and isset($_POST['password']) and isset($_POST['repeatPassword'])) {
-            $user = User::findByEmail($_POST['email']);
-            if (is_null($user)) {
-                $_POST['password'] = md5($_POST['password']);
-                $user = User::deserializeFromArray($_POST);
-                $user->save();
-                unset($_POST);
-                $_SESSION['authentication_request'] = 'created';
-                $code = $user->getAuthenticationCode();
-                $emailVars = [
-                    'to' => $user->email,
-                    'subject' => 'Email verification',
-                    'title' => 'Verify your email',
-                    'content' => 'Welcome to Invest-App! We are glad that you want to become a member. Follow the link below to verify your email.',
-                    'link_href' => PROTOCOL.'//'.HOSTNAME.'/login/'.$user->id.'-'.$code,
-                    'link_text' => 'Verify',
-                ];
-                if (self::sendEmail($emailVars)) {
-                    $vars = [
-                        'title' => 'Verify your email',
-                        'menu' => 'anon',
-                        'pageTitle' => 'Verify your email',
-                        'email' => $user->email,
-                        'pageContent' => 'Follow the link in letter to verify your email address',
-                    ];
-                    View::render('emailSent', $vars);
-                } else {
-                    PageController::showError(404);
-                }
-            } else {
-                $message = 'Email address is already taken';
-                $vars = [
-                    'title' => 'Register',
-                    'menu' => 'anon',
-                    'message' => $message,
-                ];
-                View::render('register', $vars);
-            }
-        } else {
-            $vars = [
-                'title' => 'Register',
-                'menu' => 'anon',
-            ];
-            View::render('register', $vars);
+        if ($this->user->isUptoDate()) {
+            $this->user->getAvatar();
+            SessionController::setCurrentUser($this->user);
+            $this->pageView->redirectToUrl('/profile');
         }
+
+        $verificationCode = bin2hex(random_bytes(20));
+        $this->user->setVerificationCode($verificationCode);
+
+        if (!$this->sendVerificationEmail($this->user->email, $verificationCode)) {
+            $this->authenticationView->setMessage('Failed to send an email');
+            $this->pageView->renderPage('Login', $this->menuView->getMenu(), $this->authenticationView->getContent());
+            return;
+        }
+
+        $this->pageView->renderPage('Confirm', $this->menuView->getMenu(),
+            $this->confirmationView->getContent('Check your email', $this->user->email,
+                'Follow the link in the letter to confirm your email'
+            ));
+    }
+
+    public function verifyUser($verificationCode): void
+    {
+        $this->user = SessionController::getCurrentUser();
+        if (is_null($this->user)) {
+            $this->pageView->renderErrorPage(404);
+        }
+
+        if ($this->user->getAuthenticationCode() !== $verificationCode) {
+            $this->pageView->renderErrorPage(404);
+        }
+
+        $expirationTime = date('Y-m-d H:i:s', time() + 7 * 24 * 60 * 60);
+        $this->user->setExpirationTime($expirationTime);
+        $this->user->getAvatar();
+        SessionController::setCurrentUser($this->user);
+        $this->pageView->redirectToUrl('/profile');
     }
 }
