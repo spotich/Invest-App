@@ -1,7 +1,8 @@
 <?php
 
-use InvestApp\application\controllers\PageController;
+use InvestApp\application\controllers\HomeController;
 use InvestApp\application\controllers\AuthenticationController;
+use InvestApp\application\controllers\RegistrationController;
 use InvestApp\application\controllers\SessionController;
 use InvestApp\application\controllers\RecoveryController;
 use InvestApp\application\controllers\ProfileController;
@@ -9,8 +10,8 @@ use InvestApp\application\controllers\ProjectController;
 
 return [
     '/^$/' => [
-        'controller' => PageController::class,
-        'action' => 'showHome',
+        'controller' => HomeController::class,
+        'action' => 'index',
     ],
 
     '/^projects$/' => [
@@ -25,36 +26,36 @@ return [
 
     '/^profile$/' => [
         'controller' => ProfileController::class,
-        'action' => 'showProfile',
+        'action' => 'index',
     ],
 
     '/^register$/' => [
-        'controller' => AuthenticationController::class,
+        'controller' => RegistrationController::class,
         'action' => 'registerUser',
     ],
 
     '/^login$/' => [
         'controller' => AuthenticationController::class,
-        'action' => 'createAuthenticationRequest',
+        'action' => 'index',
     ],
 
-    '/^login\/(\d+-[a-zA-Z0-9]{40})$/' => [
+    '/^verify\/([a-zA-Z0-9]{40})$/' => [
         'controller' => AuthenticationController::class,
-        'action' => 'processAuthenticationRequest',
+        'action' => 'verifyUser',
     ],
 
     '/^recover$/' => [
         'controller' => RecoveryController::class,
-        'action' => 'createRecoverRequest',
+        'action' => 'index',
     ],
 
-    '/^recover\/(\d+-[a-zA-Z0-9]{40})$/' => [
+    '/^recover\/([a-zA-Z0-9]{40})$/' => [
         'controller' => RecoveryController::class,
-        'action' => 'processRecoverRequest',
+        'action' => 'verifyRecovery',
     ],
 
     '/^logout$/' => [
         'controller' => SessionController::class,
-        'action' => 'clearCurrentUserData',
+        'action' => 'forgetCurrenUser',
     ],
 ];
