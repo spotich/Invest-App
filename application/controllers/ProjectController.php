@@ -2,55 +2,65 @@
 
 namespace InvestApp\application\controllers;
 
+use InvestApp\application\views\DetailedProjectView;
+use InvestApp\application\views\ProjectsView;
 use InvestApp\application\models\Project;
 use InvestApp\application\core\View;
+use InvestApp\application\models\User;
+use InvestApp\application\views\MenuView;
+use InvestApp\application\views\PageView;
 
 class ProjectController
 {
-    public function showProjects()
+    private ?User $user = null;
+    private ?Project $project = null;
+    private ?array $projects = null;
+    private MenuView $menuView;
+    private ProjectsView $projectView;
+    private DetailedProjectView $detailedProjectView;
+    private PageView $pageView;
+
+    public function __construct()
     {
-        $projects = Project::fetchAllData();
-        $projects[0]['tags'] = ['nature', 'science', 'eco', 'transport', 'innovation'];
-        $projects[1]['tags'] = ['society', 'medicine', 'finance', 'communication', 'charity'];
-        $projects[2]['tags'] = ['IT', 'science', 'finance'];
-        $vars = [
-            'title' => 'Projects',
-            'projects' => $projects,
-        ];
-        if (SessionController::isCurrentUserActive()) {
-            $vars['menu'] = 'auth';
-            $vars['user'] = SessionController::getCurrentUserData();
-        } else {
-            $vars['menu'] = 'anon';
-        }
-        View::render('projects', $vars);
+        $this->user = SessionController::getCurrentUser();
+        $this->menuView = new MenuView($this->user);
+        $this->pageView = new PageView();
     }
 
-    public function showDetailedProject($id)
+    public function showProjects(): void
     {
-        $pattern = '/^(\d+)$/';
-        if (preg_match($pattern, $id, $matches)) {
-            $id = $matches[1];
-            $project = Project::findById($id);
-            if (is_null($project)) {
-                PageController::showError(404);
-            } else {
-                $projectToArray = $project->serializeToArray();
-                $projectToArray['progressbar'] = $this->calculateProgress($project->progress, $project->goal);
-                $vars = [
-                    'title' => $project->name,
-                    'project' => $projectToArray,
-                ];
-                if (SessionController::isCurrentUserActive()) {
-                    $vars['menu'] = 'auth';
-                    $vars['user'] = SessionController::getCurrentUserData();
-                } else {
-                    $vars['menu'] = 'anon';
+        $this->projects = Project::getAllProjects();
+        if (is_null($this->projects)) {
+            return;
+        }
+        foreach ($this->projects as $project) {
+            uasort($project->tags, function ($a, $b) {
+                if (strlen($a) === strlen($b)) {
+                    return 0;
                 }
-                View::render('detailed', $vars);
-            }
+                return (strlen($a) < strlen($b)) ? -1 : 1;
+            });
+        }
+        $this->projectView = new ProjectsView($this->projects);
+        $this->pageView->renderPage('Projects', $this->menuView->getMenu(), $this->projectView->getContent());
+    }
+
+    public function showDetailedProject($id): void
+    {
+        $this->project = Project::findById($id);
+        if (is_null($this->project)) {
+            $this->pageView->renderErrorPage(404);
+            return;
         } else {
-            PageController::showError(404);
+            uasort($this->project->tags, function ($a, $b) {
+                if (strlen($a) === strlen($b)) {
+                    return 0;
+                }
+                return (strlen($a) < strlen($b)) ? -1 : 1;
+            });
+            $this->project->progressBar = $this->calculateProgress($this->project->progress, $this->project->goal);
+            $this->detailedProjectView = new DetailedProjectView($this->project);
+            $this->pageView->renderPage($this->project->name, $this->menuView->getMenu(), $this->detailedProjectView->getContent());
         }
     }
 
