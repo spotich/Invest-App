@@ -2,33 +2,39 @@
 
 namespace InvestApp\application\core;
 
-use JetBrains\PhpStorm\NoReturn;
 
 class View
 {
-    public static string $layout = 'default';
+    protected string $message = '';
 
-    public static function render($template, $vars = []): void {
-        extract($vars);
-        ob_start();
-        require dirname(__DIR__, 1) . "/views/templates/$menu.php";
-        $menuContent = ob_get_clean();
-
-        ob_start();
-        require dirname(__DIR__, 1) . "/views/templates/$template.php";
-        $content = ob_get_clean();
-
-        require  dirname(__DIR__, 1) . '/views/layouts/'.View::$layout.'.php';
+    public function renderTemplate($pathToTemplate, $parameters = []): ?string
+    {
+        if (file_exists($pathToTemplate)) {
+            extract($parameters);
+            ob_start();
+            require $pathToTemplate;
+            $document = ob_get_clean();
+            return is_string($document) ? $document : null;
+        } else {
+            return null;
+        }
     }
 
-    #[NoReturn] public static function redirect($url): void {
+    public function setMessage(string $message): void
+    {
+        if ($message !== '') {
+            $this->message = $message;
+        }
+    }
+
+    public function clearMessage(): void
+    {
+        $this->message = '';
+    }
+
+    public function redirectToUrl($url)
+    {
         header("location: $url");
-        exit;
-    }
-
-    #[NoReturn] public static function errorCode($code): void {
-        http_response_code($code);
-        require dirname(__DIR__, 1) . "/views/layouts/error.php";
         exit;
     }
 }
