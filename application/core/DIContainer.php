@@ -5,9 +5,11 @@ namespace InvestApp\application\core;
 use InvestApp\application\contracts\UserRepository;
 use InvestApp\application\contracts\ProjectRepository;
 use InvestApp\application\controllers\AuthenticationController;
+use InvestApp\application\controllers\HomeController;
 use InvestApp\application\controllers\ProfileController;
 use InvestApp\application\controllers\ProjectController;
 use InvestApp\application\controllers\RecoveryController;
+use InvestApp\application\controllers\SessionController;
 use InvestApp\application\databases\ProjectRepositoryMySQL;
 use InvestApp\application\databases\UserRepositoryMySQL;
 use InvestApp\application\models\User;
@@ -23,6 +25,8 @@ class DIContainer
             UserRepository::class => fn() => new UserRepositoryMySQL(),
             ProjectRepository::class => fn() => new ProjectRepositoryMySQL(),
 
+            HomeController::class => fn() => new HomeController(),
+            SessionController::class => fn() => new SessionController(),
             AuthenticationController::class => function () {
                 User::init($this->get(UserRepository::class));
                 return new AuthenticationController();
