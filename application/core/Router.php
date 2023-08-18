@@ -1,7 +1,6 @@
 <?php
 
 namespace InvestApp\application\core;
-use \ReflectionParameter;
 
 class Router
 {
@@ -12,16 +11,16 @@ class Router
     {
         $routes = require dirname(__DIR__, 1) . '/config/routes.php';
         foreach ($routes as $route => $params) {
-            Router::add($route, $params);
+            Router::addRoute($route, $params);
         }
     }
 
-    public static function add($route, $params): void
+    public static function addRoute($route, $params): void
     {
         Router::$routes[$route] = $params;
     }
 
-    public static function match(): bool
+    public static function hasRoute(): bool
     {
         $url = trim($_SERVER['REQUEST_URI'], '/');
         foreach (Router::$routes as $route => $params) {
@@ -39,7 +38,7 @@ class Router
     public static function run(): void
     {
         $container = new DIContainer();
-        if (Router::match()) {
+        if (Router::hasRoute()) {
             $Controller = Router::$params['controller'];
             $action = Router::$params['action'];
             if (class_exists($Controller) and method_exists($Controller, $action)) {
