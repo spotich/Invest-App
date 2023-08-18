@@ -3,7 +3,7 @@
 namespace InvestApp\application\models;
 
 use InvestApp\application\contracts\UserRepository;
-
+use stdClass;
 class User
 {
     public int $id;
@@ -38,39 +38,49 @@ class User
         $this->avatar = $avatar;
     }
 
-    public function is_expired(): bool
+    public function isUptoDate(): bool
     {
         $authenticationData = self::$userRepo->getAuthenticationDataForUser($this->id);
-        return ($authenticationData['expiration_time'] < date('Y-m-d H:i:s', time()));
+        return (date('Y-m-d H:i:s', time()) <= $authenticationData['expiration_time']);
     }
 
-    public function getAuthenticationCode()
+    public function getAuthenticationCode(): ?array
     {
         $authenticationData = self::$userRepo->getAuthenticationDataForUser($this->id);
         return $authenticationData['code'];
     }
 
-    public function newAuthenticationCode(): ?string
+    public function setVerificationCode(string $verificationCode): void
     {
-        return self::$userRepo->newAuthenticationCodeForUser($this->id);
+        self::$userRepo->setVerificationCodeForUser($this->id, $verificationCode);
     }
 
-    public function newResetCode(): ?string
+    public function setRecoveryCode(string $recoveryCode, string $expirationTime): void
     {
-        return self::$userRepo->newResetCodeForUser($this->id);
+        self::$userRepo->setRecoveryCodeForUser($this->id, $recoveryCode, $expirationTime);
     }
 
-    public function getResetData(): ?array
+    public function getResetData(): ?stdClass
     {
-        return self::$userRepo->getResetDataForUser($this->id);
+        $resetDataArray = self::$userRepo->getResetDataForUser($this->id);
+        if (is_null($resetDataArray)) {
+            return null;
+        }
+        if (isset($resetDataArray[0]['reset_code']) and isset($resetDataArray[0]['expiration_time'])) {
+            $resetDataObject = new stdClass();
+            $resetDataObject->resetCode = $resetDataArray[0]['reset_code'];
+            $resetDataObject->expirationTime = $resetDataArray[0]['expiration_time'];
+            return $resetDataObject;
+        }
+        return null;
     }
 
-    public function newExpirationTime()
+    public function setExpirationTime(string $expirationTime): void
     {
-        self::$userRepo->newExpirationTimeForUser($this->id);
+        self::$userRepo->setExpirationTimeForUser($this->id, $expirationTime);
     }
 
-    public function save()
+    public function save(): void
     {
         if (isset($this->id)) {
             $result = self::$userRepo->getUserById($this->id);
