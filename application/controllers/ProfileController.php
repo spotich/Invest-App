@@ -2,50 +2,62 @@
 
 namespace InvestApp\application\controllers;
 
-use InvestApp\application\core\View;
+use InvestApp\application\views\MenuView;
+use InvestApp\application\views\ProfileView;
 use InvestApp\application\models\User;
+use InvestApp\application\views\PageView;
+use stdClass;
 
 class ProfileController
 {
-    public function showProfile(): void
+    private ?User $currentUserData = null;
+    private MenuView $menuView;
+    private ProfileView $profileView;
+    private PageView $pageView;
+
+    public function __construct()
     {
-        if (isset($_POST['oldPassword']) and isset($_POST['password']) and isset($_POST['repeatPassword'])) {
-            $passwords = [
-                'old' => $_POST['oldPassword'],
-                'new' => $_POST['password'],
-            ];
-            $this->updatePassword($passwords);
-        } else {
-            $publicData = SessionController::getCurrentUserData();
-            if (is_null($publicData)) {
-                View::redirect('/login');
-            } else {
-                $vars = [
-                    'title' => 'Profile',
-                    'menu' => 'auth',
-                    'user' => $publicData,
-                ];
-                View::render('profile', $vars);
-            }
-        }
+        $this->pageView = new PageView();
     }
 
-    public function updatePassword($passwords): void
+    public function index(): void
     {
-        $publicData = SessionController::getCurrentUserData();
-        $user = User::findByEmail($publicData['email']);
-        $vars = [
-            'title' => 'Profile',
-            'menu' => 'auth',
-            'user' => $publicData,
-        ];
-        if (md5($passwords['old']) === $user->password) {
-            $user->password = md5($passwords['new']);
-            $user->save();
-        } else {
-            $message = "Old password is invalid";
-            $vars['message'] = $message;
+        $this->currentUserData = SessionController::getCurrentUser();
+        if (is_null($this->currentUserData)) {
+            $this->pageView->redirectToUrl('/login');
         }
-        View::render('profile', $vars);
+        if (isset($_POST['oldPassword']) and isset($_POST['password']) and isset($_POST['repeatPassword'])) {
+            $passwords = new stdClass();
+            $passwords->old = $_POST['oldPassword'];
+            $passwords->new = $_POST['password'];
+            $this->updatePassword($passwords);
+            return;
+        }
+        $this->showProfilePage();
+    }
+
+    private function updatePassword(stdClass $passwords): void
+    {
+        $user = User::findByEmail($this->currentUserData->email);
+        if (is_null($user)) {
+            $this->pageView->redirectToUrl('/register');
+        }
+
+        if (md5($passwords->old) !== $user->password) {
+            $this->showProfilePage('Old password is invalid');
+            return;
+        }
+
+        $user->password = md5($passwords->new);
+        $user->save();
+        $this->showProfilePage();
+    }
+
+    private function showProfilePage(string $message = ''): void
+    {
+        $this->menuView = new MenuView($this->currentUserData);
+        $this->profileView = new ProfileView($this->currentUserData);
+        $this->pageView->setMessage($message);
+        $this->pageView->renderPage('Profile', $this->menuView->getMenu(), $this->profileView->getContent());
     }
 }
