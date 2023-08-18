@@ -8,7 +8,7 @@
     <script defer type="text/javascript" src="js/menu.js"></script>
 </head>
 <body>
-    <?php echo $menuContent; ?>
+    <?php echo $menu; ?>
     <?php echo $content; ?>
 </body>
 </html>

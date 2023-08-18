@@ -8,18 +8,18 @@
                     <div class="col-2"></div>
                     <div class="col-8">
                         <div class="container">
-                            <img class="mg-fluid w-75 border border-2 rounded-3 mb-5" src="img/users/<?php echo $user['avatar']; ?>">
+                            <img class="mg-fluid w-75 border border-2 rounded-3 mb-5" src="img/users/<?php echo $user->avatar; ?>">
                         </div>
 
                         <?php if ($message !== ''): ?>
                             <p class="error"><?php echo $message; ?></p>
                         <?php endif; ?>
                         <input id="name" type="text" class="form-control form-control-lg mb-2" placeholder="Name"
-                               value="<?php echo $user["name"]; ?>" name="name" disabled>
+                               value="<?php echo $user->name; ?>" name="name" disabled>
                         <input id="surname" type="text" class="form-control form-control-lg mb-2" placeholder="Surname"
-                               value="<?php echo $user["surname"]; ?>" name="surname" disabled>
+                               value="<?php echo $user->surname; ?>" name="surname" disabled>
                         <input id="email" type="text" class="form-control form-control-lg mb-2" placeholder="Email"
-                               value="<?php echo $user["email"]; ?>" name="email" disabled>
+                               value="<?php echo $user->email; ?>" name="email" disabled>
                         <input required id="oldPassword" type="hidden" class="form-control form-control-lg mb-2"
                                placeholder="Old Password" name="oldPassword" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}">
                         <div class="row">
@@ -56,13 +56,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-<!--                        <input id="password" type="hidden" class="form-control form-control-lg mb-2"-->
-<!--                               placeholder="New password" onkeyup="comparePassword()" name="password">-->
-<!--                        <input id="repeatPassword" type="hidden" class="form-control form-control-lg mb-2"-->
-<!--                               placeholder="Repeat new password" onkeyup="comparePassword()" name="repeatPassword">-->
-<!--                        <span id='message'></span>-->
                         <a id="change-password-btn">Change password</a>
                     </div>
                     <div class="col-2"></div>

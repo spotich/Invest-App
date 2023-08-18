@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="row text-center">
-        <p>We have sent and email to <b><?php echo $email; ?></b></p>
-        <p><?php echo $pageContent; ?></p>
+        <p>We have sent and email to <b><?php echo $recieverEmail; ?></b></p>
+        <p><?php echo $instruction; ?></p>
     </div>
 </div>
