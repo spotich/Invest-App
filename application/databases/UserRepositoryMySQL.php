@@ -6,7 +6,7 @@ use InvestApp\application\contracts\UserRepository;
 
 date_default_timezone_set('Asia/Novosibirsk');
 
-class UserRepositoryMySQL extends DatabaseMySQL implements UserRepository
+class UserRepositoryMySQL extends RepositoryMySQL implements UserRepository
 {
     public function getUserByEmail(string $email): ?array
     {
@@ -85,51 +85,32 @@ class UserRepositoryMySQL extends DatabaseMySQL implements UserRepository
         }
     }
 
-    public function newAuthenticationCodeForUser(int $id): ?string
+    public function setVerificationCodeForUser(int $id, string $verificationCode): void
     {
-        $code = bin2hex(random_bytes(20));
         $params = [
             'user_id' => $id,
-            'code' => $code,
+            'code' => $verificationCode,
         ];
-        $result = $this->executeQuery('UPDATE authentications SET code = :code WHERE user_id = :user_id', $params);
-        if ($result === false) {
-            return null;
-        } else {
-            return $code;
-        }
+        $this->executeQuery('UPDATE authentications SET code = :code WHERE user_id = :user_id', $params);
     }
 
-    public function newExpirationTimeForUser(int $id)
+    public function setExpirationTimeForUser(int $id, string $expirationTime): void
     {
-        $expiry = 7 * 24 * 60 * 60; // 1 week
-        $time = date('Y-m-d H:i:s', time() + $expiry);
         $params = [
             'user_id' => $id,
-            'expiration_time' => $time,
+            'expiration_time' => $expirationTime,
         ];
-        $result = $this->executeQuery('UPDATE authentications SET expiration_time = :expiration_time  WHERE user_id = :user_id', $params);
-        if ($result === false) {
-            return null;
-        }
+        $this->executeQuery('UPDATE authentications SET expiration_time = :expiration_time  WHERE user_id = :user_id', $params);
     }
 
-    public function newResetCodeForUser(int $id): ?string
+    public function setRecoveryCodeForUser(int $id, string $recoveryCode, string $expirationTime): void
     {
-        $expiry = 5 * 60; // 5 min
-        $expiration_time = date('Y-m-d H:i:s', time() + $expiry);
-        $reset_code = bin2hex(random_bytes(20));
         $params = [
             'user_id' => $id,
-            'reset_code' => $reset_code,
-            'expiration_time' => $expiration_time,
+            'reset_code' => $recoveryCode,
+            'expiration_time' => $expirationTime,
         ];
-        $result = $this->executeQuery('INSERT INTO resets (user_id, reset_code, expiration_time) VALUES (:user_id, :reset_code, :expiration_time)', $params);
-        if ($result === false) {
-            return null;
-        } else {
-            return $reset_code;
-        }
+        $this->executeQuery('INSERT INTO resets (user_id, reset_code, expiration_time) VALUES (:user_id, :reset_code, :expiration_time)', $params);
     }
 
     public function getResetDataForUser(int $id): ?array
