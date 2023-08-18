@@ -16,10 +16,14 @@ class ConnectionToMySQL
 
     }
 
-    public static function connect(): PDO {
+    public static function connect(): ?PDO {
         if (self::$conn == null) {
-            $config = require dirname(__DIR__, 1) . '/config/db.php';
-            self::$conn = new PDO('mysql:host='.$config['host'].';dbname='.$config['name'], $config['user'], $config['password']);
+            if(file_exists(dirname(__DIR__, 1) . '/config/db.php')) {
+                $config = require dirname(__DIR__, 1) . '/config/db.php';
+                self::$conn = new PDO('mysql:host='.$config['host'].';dbname='.$config['name'], $config['user'], $config['password']);
+            } else {
+                return null;
+            }
 		}
 		return self::$conn;
 	}
