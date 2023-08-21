@@ -8,40 +8,61 @@ use InvestApp\application\models\User;
 class MenuView extends View
 {
     private ?User $user;
-    private string $pathToAnonMenuTemplate;
-    private string $pathToAuthMenuTemplate;
+    private string $pathToDefaultMenuTemplate;
     private string $pathToAdminNavigation;
-    private string $pathToUsualNavigation;
+    private string $pathToAnonNavigation;
+    private string $pathToInvestorNavigation;
+    private string $pathToTeamMemberNavigation;
+    private string $pathToButtonsTemplate;
+    private string $pathToMiniatureTemplate;
 
     public function __construct(?User $user)
     {
         $this->user = $user;
-        $this->pathToAnonMenuTemplate = dirname(__DIR__, 1) . "/views/menus/anon.php";
-        $this->pathToAuthMenuTemplate = dirname(__DIR__, 1) . "/views/menus/auth.php";
-        $this->pathToAdminNavigation = dirname(__DIR__, 1) . "/views/menus/adminNavigation.php";
-        $this->pathToUsualNavigation = dirname(__DIR__, 1) . "/views/menus/usualNavigation.php";
+        $this->pathToDefaultMenuTemplate = dirname(__DIR__, 1) . "/views/menus/default.php";
+        $this->pathToButtonsTemplate = dirname(__DIR__, 1) . "/views/menus/buttons.php";
+        $this->pathToMiniatureTemplate = dirname(__DIR__, 1) . "/views/menus/miniature.php";
+        $this->pathToAdminNavigation = dirname(__DIR__, 1) . "/config/menu/admin.php";
+        $this->pathToAnonNavigation = dirname(__DIR__, 1) . "/config/menu/anon.php";
+        $this->pathToInvestorNavigation = dirname(__DIR__, 1) . "/config/menu/investor.php";
+        $this->pathToTeamMemberNavigation = dirname(__DIR__, 1) . "/config/menu/teamMember.php";
     }
 
     public function getMenu(): string
     {
+        return $this->renderTemplate($this->pathToDefaultMenuTemplate, [
+            'navItems' => $this->getNavItems(),
+            'buttons' => $this->getButtons(),
+            'miniature' => $this->getMiniature(),
+        ]);
+    }
+
+    private function getNavItems(): array
+    {
         if ($this->parametersAreValid()) {
-            return $this->renderTemplate($this->pathToAuthMenuTemplate, [
-                'user' => $this->user,
-                'navigation' => $this->getNavigation(),
-            ]);
+            return match ($this->user->role) {
+                'Admin' => require $this->pathToAdminNavigation,
+                'Team member' => require $this->pathToTeamMemberNavigation,
+                'Investor' => require $this->pathToInvestorNavigation,
+            };
         } else {
-            return $this->renderTemplate($this->pathToAnonMenuTemplate, [
-                'navigation' => $this->renderTemplate($this->pathToUsualNavigation),
-            ]);
+            return require $this->pathToAnonNavigation;
         }
     }
 
-    private function getNavigation(): ?string
-    {
-        if ($this->user->role === 'Admin') {
-            return $this->renderTemplate($this->pathToAdminNavigation);
+    private function getButtons(): string {
+        if ($this->parametersAreValid()) {
+            return '';
         } else {
-            return $this->renderTemplate($this->pathToUsualNavigation);
+            return $this->renderTemplate($this->pathToButtonsTemplate);
+        }
+    }
+
+    private function getMiniature(): string {
+        if ($this->parametersAreValid()) {
+            return $this->renderTemplate($this->pathToMiniatureTemplate, ['user' => $this->user]);
+        } else {
+            return '';
         }
     }
 
