@@ -16,8 +16,8 @@ return [
         'icon' => 'website.png',
     ],
     [
-        'name' => 'Create Project',
+        'name' => 'Create',
         'href' => '/create',
-        'icon' => 'no.png',
+        'icon' => 'idea.png',
     ],
 ];
