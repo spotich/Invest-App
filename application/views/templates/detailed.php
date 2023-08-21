@@ -4,9 +4,73 @@
         <div class="col-1"></div>
         <div class="col-10 project">
             <h2 class="mb-5 mt-3"><?php echo $project->descriptionShort; ?></h2>
+            <h2 class="mt-5 mb-4 text-center test">We have collected <span class="num"><?php echo $project->progress; ?></span>$</h2>
+            <div class="row mb-2">
+                <div class="col-9">
+                    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuemin="0"
+                         aria-valuemax="100">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                             style="width: <?php echo $project->progressBar; ?>%"></div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <button id="payment-button" type="button" class="btn btn-lg btn-primary w-100">
+                        Invest
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9 d-flex justify-content-between">
+                    <p>0$</p>
+                    <p><span class="num"><?php echo $project->goal; ?></span>$</p>
+                </div>
+                <div class="col-3 text-center">
+                    <p>and return 10% annually</p>
+                </div>
+            </div>
             <img src="/img/projects/<?php echo $project->cover; ?>"
-                 class="img-fluid w-100 border border-2 rounded-3 mb-5">
+                 class="img-fluid w-100 border border-2 rounded-3 mb-5 mt-4">
             <h3 class="mb-5"><?php echo $project->descriptionLong; ?></h3>
+
+            <div id="carouselExampleCaptions" class="carousel slide mb-5">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner rounded">
+                    <div class="carousel-item active">
+                        <img src="/img/projects/project-name.jpeg" class="carousel-img d-block img-fluid" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>First slide label</h5>
+                            <p>Some representative placeholder content for the first slide.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item" >
+                        <img src="/img/projects/project-name-2.jpeg" class="carousel-img d-block img-fluid" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Second slide label</h5>
+                            <p>Some representative placeholder content for the second slide.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/projects/project-name-3.jpeg" class="carousel-img d-block img-fluid" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Third slide label</h5>
+                            <p>Some representative placeholder content for the third slide.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
             <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
                 <?php foreach ($project->teamMembers as $teamMember): ?>
                     <div class="col d-flex">
@@ -20,31 +84,29 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-            <div class="row d-flex justify-content-between">
-
-            </div>
-            <h2 class="mt-5">We have collected <span class="num"><?php echo $project->progress; ?></span>$</h2>
-            <p>Get your 10% annual subscription!</p>
-            <div class="row">
-                <div class="col-10">
+            <h2 class="mt-5 mb-4 text-center test">We have collected <span class="num"><?php echo $project->progress; ?></span>$</h2>
+            <div class="row mb-2">
+                <div class="col-9">
                     <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuemin="0"
                          aria-valuemax="100">
                         <div class="progress-bar progress-bar-striped progress-bar-animated"
                              style="width: <?php echo $project->progressBar; ?>%"></div>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <button id="payment-button" type="button" class="btn btn-lg btn-primary w-100">
                         Invest
                     </button>
                 </div>
             </div>
             <div class="row">
-                <div class="col-10 d-flex justify-content-between">
-                    <p>0</p>
+                <div class="col-9 d-flex justify-content-between">
+                    <p>0$</p>
                     <p><span class="num"><?php echo $project->goal; ?></span>$</p>
                 </div>
-                <div class="col-2"></div>
+                <div class="col-3 text-center">
+                    <p>and return 10% annually</p>
+                </div>
             </div>
             <div id="payment" class="modal">
                 <div class="container">
@@ -92,4 +154,4 @@
 </div>
 
 <script type="text/javascript" src="../js/popup.js"></script>
-<script type="text/javascript" src="../js/numberFormat.js"></script>
+<script type="text/javascript" src="../js/numberFormat.js"></script>это с
