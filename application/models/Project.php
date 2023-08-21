@@ -3,8 +3,9 @@
 namespace InvestApp\application\models;
 
 use InvestApp\application\contracts\ProjectRepository;
+use InvestApp\application\models\Model;
 
-class Project
+class Project extends Model
 {
     public int $id;
     public string $name;
