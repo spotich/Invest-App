@@ -10,26 +10,13 @@ class UserRepositoryMySQL extends RepositoryMySQL implements UserRepository
 {
     public function getUserByEmail(string $email): ?array
     {
-        $params = [
-            'email' => $email,
-            ];
-        $result = $this->getRow('SELECT * FROM users WHERE email = :email', $params);
+        $result = $this->getRow('SELECT * FROM users WHERE email = :email', ['email' => $email]);
         return is_array($result) ? $result[0] : null;
-    }
-
-    public function getUserAvatar($id): ?string
-    {
-        $params = [
-            'id' => $id,
-        ];
-        $result = $this->getRow('SELECT ua.name as avatar FROM users u JOIN user_avatars ua ON u.id = ua.user_id WHERE u.id = :id', $params);
-        return is_array($result) ? $result[0]['avatar'] : null;
     }
 
     public function getUserById(int $id): ?array
     {
-        $params = ['id' => $id];
-        $result = $this->getRow('SELECT u.*, ua.name as avatar FROM users u JOIN user_avatars ua ON u.id = ua.user_id WHERE u.id = :id', $params);
+        $result = $this->getRow('SELECT * FROM users WHERE id = :id', ['id' => $id]);
         return is_array($result) ? $result[0] : null;
     }
 
@@ -37,28 +24,23 @@ class UserRepositoryMySQL extends RepositoryMySQL implements UserRepository
     {
         $ok = (isset($user['name']) and isset($user['surname']) and isset($user['email']) and isset($user['role']) and isset($user['password']));
         if ($ok) {
-            $this->executeQuery('INSERT INTO users (name, surname, email, role, password) VALUES (:name, :surname, :email, :role, :password)', $user);
+            $user['avatar'] = 'person.jpeg';
+            $this->executeQuery('INSERT INTO users (name, surname, email, role, password, avatar) VALUES (:name, :surname, :email, :role, :password, :avatar)', $user);
             $code = bin2hex(random_bytes(20));
             $id = $this->getUserByEmail($user['email'])['id'];
-
             $params = [
                 'user_id' => $id,
                 'code' => $code,
             ];
             $this->executeQuery('INSERT INTO authentications (code, user_id) VALUES (:code, :user_id)', $params);
             unset($params['code']);
-            $params['name'] = 'person.jpg';
-            $this->executeQuery('INSERT INTO user_avatars (user_id, name) VALUES (:user_id, :name)', $params);
         }
         return is_int($id) ? $id : null;
     }
 
     public function getAuthenticationDataForUser(int $id): ?array
     {
-        $params = [
-            'user_id' => $id,
-        ];
-        $result = $this->getRow('SELECT code, expiration_time FROM authentications WHERE user_id=:user_id', $params);
+        $result = $this->getRow('SELECT code, expiration_time FROM authentications WHERE user_id = :user_id', ['user_id' => $id]);
         return is_array($result) ? $result[0] : null;
     }
 
@@ -74,7 +56,7 @@ class UserRepositoryMySQL extends RepositoryMySQL implements UserRepository
             }
             $setting = substr($setting, 0, -2);
             $user['id'] = (int)$id;
-            $result = $this->executeQuery("UPDATE users SET $setting WHERE id=:id ", $user);
+            $result = $this->executeQuery("UPDATE users SET $setting WHERE id = :id ", $user);
             if ($result === false) {
                 return false;
             } else {
@@ -115,11 +97,8 @@ class UserRepositoryMySQL extends RepositoryMySQL implements UserRepository
 
     public function getResetDataForUser(int $id): ?array
     {
-        $params = [
-            'user_id' => $id,
-        ];
-        $result = $this->getRow('SELECT reset_code, expiration_time FROM resets WHERE user_id=:user_id', $params);
-        $this->executeQuery('DELETE FROM resets WHERE user_id=:user_id', $params);
+        $result = $this->getRow('SELECT reset_code, expiration_time FROM resets WHERE user_id = :user_id', ['user_id' => $id]);
+        $this->executeQuery('DELETE FROM resets WHERE user_id = :user_id', ['user_id' => $id]);
         return is_array($result) ? $result : null;
     }
 }

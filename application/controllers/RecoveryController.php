@@ -71,7 +71,6 @@ class RecoveryController
     {
         $this->user->password = md5($password);
         $this->user->save();
-        $this->user->getAvatar();
         SessionController::setCurrentUser($this->user);
         $this->pageView->redirectToUrl('/profile');
     }

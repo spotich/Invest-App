@@ -58,7 +58,6 @@ class AuthenticationController
     private function authenticateUser(): void
     {
         if ($this->user->isUptoDate()) {
-            $this->user->getAvatar();
             SessionController::setCurrentUser($this->user);
             $this->pageView->redirectToUrl('/profile');
         }
@@ -91,7 +90,6 @@ class AuthenticationController
 
         $expirationTime = date('Y-m-d H:i:s', time() + 7 * 24 * 60 * 60);
         $this->user->setExpirationTime($expirationTime);
-        $this->user->getAvatar();
         SessionController::setCurrentUser($this->user);
         $this->pageView->redirectToUrl('/profile');
     }

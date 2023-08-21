@@ -6,7 +6,6 @@ interface UserRepository extends Repository
 {
     public function getUserByEmail(string $email): ?array;
     public function getUserById(int $id): ?array;
-    public function getUserAvatar(int $id): ?string;
     public function createNewUser(array $user): ?int;
     public function updateUser(array $user): ?bool;
     public function setVerificationCodeForUser(int $id, string $verificationCode): void;

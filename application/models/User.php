@@ -32,12 +32,6 @@ class User
         return is_null($userArray) ? null : self::deserializeFromArray($userArray);
     }
 
-    public function getAvatar(): void
-    {
-        $avatar = self::$userRepo->getUserAvatar($this->id);
-        $this->avatar = $avatar;
-    }
-
     public function isUptoDate(): bool
     {
         $authenticationData = self::$userRepo->getAuthenticationDataForUser($this->id);
