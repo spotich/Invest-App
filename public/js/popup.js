@@ -1,8 +1,12 @@
 let paymentModal = document.getElementById("payment");
-let paymentButton = document.getElementById("payment-button");
+// let paymentButton = document.getElementById("payment-button");
+let paymentButtons = document.getElementsByClassName("payment-button");
 
-paymentButton.onclick = function () {
-    paymentModal.style.display = "block";
+for (let i = 0; i < paymentButtons.length; i++) {
+    paymentButtons[i].onclick = function () {
+        paymentModal.style.display = "block";
+    }
+
 }
 
 window.onclick = function(event) {

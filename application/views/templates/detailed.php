@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="col-3">
-                    <button id="payment-button" type="button" class="btn btn-lg btn-primary w-100">
+                    <button type="button" class="btn btn-lg btn-primary w-100 payment-button">
                         Invest
                     </button>
                 </div>
@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div class="col-3">
-                    <button id="payment-button" type="button" class="btn btn-lg btn-primary w-100">
+                    <button type="button" class="btn btn-lg btn-primary w-100 payment-button">
                         Invest
                     </button>
                 </div>
