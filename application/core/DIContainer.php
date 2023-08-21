@@ -9,6 +9,7 @@ use InvestApp\application\controllers\HomeController;
 use InvestApp\application\controllers\ProfileController;
 use InvestApp\application\controllers\ProjectController;
 use InvestApp\application\controllers\RecoveryController;
+use InvestApp\application\controllers\RegistrationController;
 use InvestApp\application\controllers\SessionController;
 use InvestApp\application\databases\ProjectRepositoryMySQL;
 use InvestApp\application\databases\UserRepositoryMySQL;
@@ -27,6 +28,10 @@ class DIContainer
 
             HomeController::class => fn() => new HomeController(),
             SessionController::class => fn() => new SessionController(),
+            RegistrationController::class =>function () {
+                User::init($this->get(UserRepository::class));
+                return new RegistrationController();
+            },
             AuthenticationController::class => function () {
                 User::init($this->get(UserRepository::class));
                 return new AuthenticationController();
