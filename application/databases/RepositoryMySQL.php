@@ -40,6 +40,15 @@ abstract class RepositoryMySQL implements Repository
     public function getColumn($sql, $params = [])
     {
         $result = $this->executeQuery($sql, $params);
-        return $result->fetchColumn();
+        return $result->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    protected function getUpdateSetting(array $object): string {
+        unset($object['id']);
+        $setting = '';
+        foreach (array_keys($object) as $key) {
+            $setting = "$setting$key = :$key, ";
+        }
+        return substr($setting, 0, -2);
     }
 }
