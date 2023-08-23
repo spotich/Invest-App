@@ -13,7 +13,7 @@ class DetailedProjectView extends View
     public function __construct(?Project $project)
     {
         $this->project = $project;
-        $this->pathToDetailedTemplate = dirname(__DIR__, 1) . "/views/templates/detailed.php";
+        $this->pathToDetailedTemplate = dirname(__DIR__, 1) . "/views/templates/detailedProject.php";
     }
 
     public function getContent(): ?string
