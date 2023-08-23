@@ -44,7 +44,7 @@ class RegistrationController
         }
 
         $_POST['password'] = md5($_POST['password']);
-        $this->user = User::deserializeFromArray($_POST);
+        $this->user = User::toObject($_POST);
         $this->user->save();
 
         $verificationCode = bin2hex(random_bytes(20));
