@@ -46,25 +46,11 @@ class UserRepositoryMySQL extends RepositoryMySQL implements UserRepository
 
     public function updateUser(array $user): ?bool
     {
-        $ok = (isset($user['id']) and (isset($user['name']) or isset($user['surname']) or isset($user['email']) or isset($user['role']) or isset($user['password'])));
-        if ($ok) {
-            $id = $user['id'];
-            unset($user['id']);
-            $setting = '';
-            foreach (array_keys($user) as $key) {
-                $setting = "$setting$key = :$key, ";
-            }
-            $setting = substr($setting, 0, -2);
-            $user['id'] = (int)$id;
-            $result = $this->executeQuery("UPDATE users SET $setting WHERE id = :id ", $user);
-            if ($result === false) {
-                return false;
-            } else {
-                return true;
-            }
-        } else {
+        if (!isset($user['id'])) {
             return null;
         }
+        $setting = $this->getUpdateSetting($user);
+        return $this->executeQuery("UPDATE users SET $setting WHERE id = :id", $user);
     }
 
     public function setVerificationCodeForUser(int $id, string $verificationCode): void
