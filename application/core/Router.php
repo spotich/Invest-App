@@ -2,6 +2,8 @@
 
 namespace InvestApp\application\core;
 
+use InvestApp\application\views\PageView;
+
 class Router
 {
     private static $routes = [];
@@ -38,6 +40,7 @@ class Router
     public static function run(): void
     {
         $container = new DIContainer();
+        $pageView = new PageView();
         if (Router::hasRoute()) {
             $Controller = Router::$params['controller'];
             $action = Router::$params['action'];
@@ -54,10 +57,10 @@ class Router
                     isset($controller) ? $controller->$action() : $Controller::$action();
                 }
             } else {
-                View::errorCode(404);
+                $pageView->renderErrorPage(404);
             }
         } else {
-            View::errorCode(404);
+            $pageView->renderErrorPage(404);
         }
     }
 }
