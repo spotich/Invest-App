@@ -15,6 +15,7 @@ use InvestApp\application\databases\ProjectRepositoryMySQL;
 use InvestApp\application\databases\UserRepositoryMySQL;
 use InvestApp\application\models\User;
 use InvestApp\application\models\Project;
+use InvestApp\application\controllers\AdminController;
 
 class DIContainer
 {
@@ -25,7 +26,6 @@ class DIContainer
         $this->dependencies = [
             UserRepository::class => fn() => new UserRepositoryMySQL(),
             ProjectRepository::class => fn() => new ProjectRepositoryMySQL(),
-
             HomeController::class => fn() => new HomeController(),
             SessionController::class => fn() => new SessionController(),
             RegistrationController::class =>function () {
@@ -47,6 +47,10 @@ class DIContainer
             ProjectController::class => function () {
                 Project::init($this->get(ProjectRepository::class));
                 return new ProjectController();
+            },
+            AdminController::class => function () {
+                Project::init($this->get(ProjectRepository::class));
+                return new AdminController();
             },
         ];
     }
