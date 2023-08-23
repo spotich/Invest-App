@@ -12,7 +12,7 @@
                             <h2><?php echo $project->name; ?></h2>
                         </div>
                         <div class="row">
-                            <h3><?php echo $project->descriptionShort; ?></h3>
+                            <h3><?php echo $project->description_short; ?></h3>
                         </div>
                     </div>
 
