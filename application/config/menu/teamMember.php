@@ -16,6 +16,11 @@ return [
         'icon' => 'website.png',
     ],
     [
+        'name' => 'Requests',
+        'href' => '/my-requests',
+        'icon' => 'feedback.png',
+    ],
+    [
         'name' => 'Create',
         'href' => '/create',
         'icon' => 'idea.png',

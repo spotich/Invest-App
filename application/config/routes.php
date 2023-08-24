@@ -8,6 +8,7 @@ use InvestApp\application\controllers\RecoveryController;
 use InvestApp\application\controllers\ProfileController;
 use InvestApp\application\controllers\ProjectController;
 use InvestApp\application\controllers\AdminController;
+use InvestApp\application\controllers\TeamMemberController;
 
 return [
     '#^$#' => [
@@ -26,8 +27,18 @@ return [
     ],
 
     '#^create$#' => [
-        'controller' => ProjectController::class,
-        'action' => 'createProject',
+        'controller' => TeamMemberController::class,
+        'action' => 'showCreatePage',
+    ],
+
+    '#^createRequest$#' => [
+        'controller' => TeamMemberController::class,
+        'action' => 'test',
+    ],
+
+    '#^my-requests$#' => [
+        'controller' => TeamMemberController::class,
+        'action' => 'showMyRequests',
     ],
 
     '#^requests$#' => [
