@@ -2,9 +2,9 @@
 
 namespace InvestApp\application\controllers;
 
-use InvestApp\application\views\ConfirmationView;
+use InvestApp\application\views\ConfirmationPageView;
 use InvestApp\application\traits\FetchingGuestDataTrait;
-use InvestApp\application\views\AuthenticationView;
+use InvestApp\application\views\AuthenticationPageView;
 use InvestApp\application\traits\SendingEmailTrait;
 use InvestApp\application\models\User;
 use InvestApp\application\views\MenuView;
@@ -19,16 +19,16 @@ class AuthenticationController
     private ?User $user = null;
     private ?stdClass $guest = null;
     private MenuView $menuView;
-    private AuthenticationView $authenticationView;
-    private ConfirmationView $confirmationView;
+    private AuthenticationPageView $authenticationView;
+    private ConfirmationPageView $confirmationView;
     private PageView $pageView;
 
     public function __construct()
     {
         $this->menuView = new MenuView($this->user);
-        $this->authenticationView = new AuthenticationView();
+        $this->authenticationView = new AuthenticationPageView();
         $this->pageView = new PageView();
-        $this->confirmationView = new ConfirmationView();
+        $this->confirmationView = new ConfirmationPageView();
     }
 
     public function index(): void

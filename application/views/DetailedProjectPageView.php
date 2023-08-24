@@ -5,21 +5,21 @@ namespace InvestApp\application\views;
 use InvestApp\application\core\View;
 use InvestApp\application\models\Project;
 
-class DetailedRequestView extends View
+class DetailedProjectPageView extends View
 {
     private string $pathToDetailedTemplate;
-    private ?Project $request;
+    private ?Project $project;
 
-    public function __construct(?Project $request)
+    public function __construct(?Project $project)
     {
-        $this->request = $request;
-        $this->pathToDetailedTemplate = dirname(__DIR__, 1) . "/views/templates/detailedRequest.php";
+        $this->project = $project;
+        $this->pathToDetailedTemplate = dirname(__DIR__, 1) . "/views/templates/detailedProject.php";
     }
 
     public function getContent(): ?string
     {
         return $this->renderTemplate($this->pathToDetailedTemplate, [
-            'request' => $this->request,
+            'project' => $this->project,
         ]);
     }
 }

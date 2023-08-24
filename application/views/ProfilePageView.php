@@ -5,7 +5,7 @@ namespace InvestApp\application\views;
 use InvestApp\application\core\View;
 use InvestApp\application\models\User;
 
-class ProfileView extends View
+class ProfilePageView extends View
 {
     private string $pathToProfileTemplate;
     private ?User $user;

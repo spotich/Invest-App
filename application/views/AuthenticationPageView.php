@@ -4,7 +4,7 @@ namespace InvestApp\application\views;
 
 use InvestApp\application\core\View;
 
-class AuthenticationView extends View
+class AuthenticationPageView extends View
 {
     private string $pathToLoginTemplate;
 

@@ -5,7 +5,7 @@ namespace InvestApp\application\views;
 use InvestApp\application\core\View;
 use InvestApp\application\models\Project;
 
-class ProjectsView extends View
+class ProjectsPageView extends View
 {
     private array  $projects;
     private string $pathToProjectsTemplate;

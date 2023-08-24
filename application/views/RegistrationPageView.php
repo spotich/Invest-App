@@ -4,7 +4,7 @@ namespace InvestApp\application\views;
 
 use InvestApp\application\core\View;
 
-class RegistrationView extends View
+class RegistrationPageView extends View
 {
     private string $pathToRegisterTemplate;
 

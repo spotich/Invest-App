@@ -4,7 +4,7 @@ namespace InvestApp\application\views;
 
 use InvestApp\application\core\View;
 
-class RequestsView extends View
+class RequestsPageView extends View
 {
     private array  $requests;
     private string $pathToRequestsTemplate;

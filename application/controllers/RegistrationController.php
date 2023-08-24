@@ -7,7 +7,7 @@ use InvestApp\application\traits\SendingEmailTrait;
 use InvestApp\application\models\User;
 use InvestApp\application\views\MenuView;
 use InvestApp\application\views\PageView;
-use InvestApp\application\views\RegistrationView;
+use InvestApp\application\views\RegistrationPageView;
 use stdClass;
 
 class RegistrationController
@@ -18,13 +18,13 @@ class RegistrationController
     private ?User $user = null;
     private ?stdClass $guest = null;
     private MenuView $menuView;
-    private RegistrationView $registrationView;
+    private RegistrationPageView $registrationView;
     private PageView $pageView;
 
     public function __construct()
     {
         $this->menuView = new MenuView($this->user);
-        $this->registrationView = new RegistrationView();
+        $this->registrationView = new RegistrationPageView();
         $this->pageView = new PageView();
     }
 

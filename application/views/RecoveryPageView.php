@@ -4,7 +4,7 @@ namespace InvestApp\application\views;
 
 use InvestApp\application\core\View;
 
-class RecoveryView extends View
+class RecoveryPageView extends View
 {
     private string $pathToRecoverTemplate;
     private string $pathToNewPasswordTemplate;

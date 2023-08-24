@@ -3,7 +3,7 @@
 namespace InvestApp\application\controllers;
 
 use InvestApp\application\views\MenuView;
-use InvestApp\application\views\ProfileView;
+use InvestApp\application\views\ProfilePageView;
 use InvestApp\application\models\User;
 use InvestApp\application\views\PageView;
 use stdClass;
@@ -12,7 +12,7 @@ class ProfileController
 {
     private ?User $currentUserData = null;
     private MenuView $menuView;
-    private ProfileView $profileView;
+    private ProfilePageView $profileView;
     private PageView $pageView;
 
     public function __construct()
@@ -56,7 +56,7 @@ class ProfileController
     private function showProfilePage(string $message = ''): void
     {
         $this->menuView = new MenuView($this->currentUserData);
-        $this->profileView = new ProfileView($this->currentUserData);
+        $this->profileView = new ProfilePageView($this->currentUserData);
         $this->pageView->setMessage($message);
         $this->pageView->renderPage('Profile', $this->menuView->getMenu(), $this->profileView->getContent());
     }

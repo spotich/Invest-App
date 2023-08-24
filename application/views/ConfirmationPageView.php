@@ -4,7 +4,7 @@ namespace InvestApp\application\views;
 
 use InvestApp\application\core\View;
 
-class ConfirmationView extends View
+class ConfirmationPageView extends View
 {
     private string $pathToConfirmEmailTemplate;
 

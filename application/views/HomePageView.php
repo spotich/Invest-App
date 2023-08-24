@@ -4,7 +4,7 @@ namespace InvestApp\application\views;
 
 use InvestApp\application\core\View;
 
-class HomeView extends View
+class HomePageView extends View
 {
     private string $pathToHomeTemplate;
 

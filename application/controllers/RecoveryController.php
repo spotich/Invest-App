@@ -2,8 +2,8 @@
 
 namespace InvestApp\application\controllers;
 
-use InvestApp\application\views\ConfirmationView;
-use InvestApp\application\views\RecoveryView;
+use InvestApp\application\views\ConfirmationPageView;
+use InvestApp\application\views\RecoveryPageView;
 use InvestApp\application\traits\SendingEmailTrait;
 use InvestApp\application\models\User;
 use InvestApp\application\views\MenuView;
@@ -15,16 +15,16 @@ class RecoveryController
 
     private ?User $user = null;
     private MenuView $menuView;
-    private RecoveryView $recoveryView;
+    private RecoveryPageView $recoveryView;
     private PageView $pageView;
-    private ConfirmationView $confirmationView;
+    private ConfirmationPageView $confirmationView;
 
     public function __construct()
     {
         $this->menuView = new MenuView($this->user);
-        $this->recoveryView = new RecoveryView();
+        $this->recoveryView = new RecoveryPageView();
         $this->pageView = new PageView();
-        $this->confirmationView = new ConfirmationView();
+        $this->confirmationView = new ConfirmationPageView();
     }
 
     public function index(): void
