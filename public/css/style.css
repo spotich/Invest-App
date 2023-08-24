@@ -144,6 +144,12 @@ form a {
     font-weight: bold;
 }
 
+.pending {
+    color: black;
+    opacity: 0.6;
+    font-weight: bold;
+}
+
 .projects {
     margin-top: 5em;
 }
