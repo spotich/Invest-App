@@ -16,6 +16,7 @@ use InvestApp\application\databases\UserRepositoryMySQL;
 use InvestApp\application\models\User;
 use InvestApp\application\models\Project;
 use InvestApp\application\controllers\AdminController;
+use InvestApp\application\controllers\TeamMemberController;
 
 class DIContainer
 {
@@ -51,6 +52,10 @@ class DIContainer
             AdminController::class => function () {
                 Project::init($this->get(ProjectRepository::class));
                 return new AdminController();
+            },
+            TeamMemberController::class => function () {
+                Project::init($this->get(ProjectRepository::class));
+                return new TeamMemberController();
             },
         ];
     }
