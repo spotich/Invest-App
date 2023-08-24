@@ -3,8 +3,8 @@
 namespace InvestApp\application\controllers;
 
 use InvestApp\application\traits\SortingStringsTrait;
-use InvestApp\application\views\DetailedProjectView;
-use InvestApp\application\views\ProjectsView;
+use InvestApp\application\views\DetailedProjectPageView;
+use InvestApp\application\views\ProjectsPageView;
 use InvestApp\application\models\Project;
 use InvestApp\application\models\User;
 use InvestApp\application\views\MenuView;
@@ -18,8 +18,8 @@ class ProjectController
     private ?Project $project = null;
     private ?array $projects = null;
     private MenuView $menuView;
-    private ProjectsView $projectView;
-    private DetailedProjectView $detailedProjectView;
+    private ProjectsPageView $projectView;
+    private DetailedProjectPageView $detailedProjectView;
     private PageView $pageView;
 
     public function __construct()
@@ -36,9 +36,9 @@ class ProjectController
             return;
         }
         foreach ($this->projects as $project) {
-            $this->sortStrings($project->tags);
+            $project->tags = $this->sortStrings($project->tags);
         }
-        $this->projectView = new ProjectsView($this->projects);
+        $this->projectView = new ProjectsPageView($this->projects);
         $this->pageView->renderPage('Projects', $this->menuView->getMenu(), $this->projectView->getContent());
     }
 
@@ -49,9 +49,9 @@ class ProjectController
             $this->pageView->renderErrorPage(404);
             return;
         }
-        $this->sortStrings($this->project->tags);
+        $this->project->tags = $this->sortStrings($this->project->tags);
         $this->project->progress_bar = $this->calculateProgress($this->project->progress, $this->project->goal);
-        $this->detailedProjectView = new DetailedProjectView($this->project);
+        $this->detailedProjectView = new DetailedProjectPageView($this->project);
         $this->pageView->renderPage($this->project->name, $this->menuView->getMenu(), $this->detailedProjectView->getContent());
     }
 

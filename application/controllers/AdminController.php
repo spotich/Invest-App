@@ -3,13 +3,13 @@
 namespace InvestApp\application\controllers;
 
 use InvestApp\application\traits\SortingStringsTrait;
-use InvestApp\application\views\RequestsView;
+use InvestApp\application\views\RequestsPageView;
 use InvestApp\application\contracts\ProjectRepository;
 use InvestApp\application\models\User;
 use InvestApp\application\models\Project;
 use InvestApp\application\views\MenuView;
 use InvestApp\application\views\PageView;
-use InvestApp\application\views\DetailedRequestView;
+use InvestApp\application\views\DetailedRequestPageView;
 
 
 class AdminController
@@ -20,8 +20,8 @@ class AdminController
     private ?Project $request = null;
     private ?array $requests = null;
     private MenuView $menuView;
-    private DetailedRequestView $detailedRequestView;
-    private RequestsView $adminView;
+    private DetailedRequestPageView $detailedRequestView;
+    private RequestsPageView $adminView;
     private PageView $pageView;
 
     private static ProjectRepository $projectRepo;
@@ -43,9 +43,9 @@ class AdminController
             $this->pageView->renderErrorPage(404);
         }
         foreach ($this->requests as $request) {
-            $this->sortStrings($request->tags);
+            $request->tags = $this->sortStrings($request->tags);
         }
-        $this->adminView = new RequestsView($this->requests);
+        $this->adminView = new RequestsPageView($this->requests);
         $this->pageView->renderPage('Requests', $this->menuView->getMenu(), $this->adminView->getContent());
     }
 
@@ -56,8 +56,8 @@ class AdminController
             $this->pageView->renderErrorPage(404);
             return;
         }
-        $this->sortStrings($this->request->tags);
-        $this->detailedRequestView = new DetailedRequestView($this->request);
+        $this->request->tags = $this->sortStrings($this->request->tags);
+        $this->detailedRequestView = new DetailedRequestPageView($this->request);
         $this->pageView->renderPage($this->request->name, $this->menuView->getMenu(), $this->detailedRequestView->getContent());
     }
 

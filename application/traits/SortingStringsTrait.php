@@ -4,7 +4,7 @@ namespace InvestApp\application\traits;
 
 trait SortingStringsTrait
 {
-    private function sortStrings(array $strings): void
+    private function sortStrings(array $strings): array
     {
         uasort($strings, function ($a, $b) {
             if (strlen($a) === strlen($b)) {
@@ -12,5 +12,6 @@ trait SortingStringsTrait
             }
             return (strlen($a) < strlen($b)) ? -1 : 1;
         });
+        return $strings;
     }
 }
