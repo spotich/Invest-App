@@ -15,6 +15,24 @@ class ProjectRepositoryMySQL extends RepositoryMySQL implements ProjectRepositor
         return is_array($results) ? $results : null;
     }
 
+    public function getAllProjectsOfAuthor(string $status, int $author_id): ?array
+    {
+        $results = $this->getRow('SELECT id, name, description_short, created_at, cover, message FROM projects WHERE status = :status AND author = :author', ['status' => $status, 'author' => $author_id]);
+        for ($i = 0; $i < sizeof($results); $i++) {
+            $results[$i]['tags'] = $this->getColumn('SELECT t.name FROM projects p JOIN projects_tags pt ON p.id = pt.project_id JOIN tags t ON pt.tag_id = t.id where p.id = :id', ['id' => $results[$i]['id']]);
+        }
+        return is_array($results) ? $results : null;
+    }
+
+    public function getAllTags(): ?array
+    {
+        if ($tags = $this->getRow('SELECT * FROM tags')) {
+            return $tags;
+        } else {
+            return null;
+        }
+    }
+
     public function getProjectById(int $id): ?array
     {
         $result = $this->getRow('SELECT * FROM projects WHERE id = :id', ['id' => $id]);

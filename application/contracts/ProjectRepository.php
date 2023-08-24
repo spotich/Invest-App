@@ -5,6 +5,8 @@ namespace InvestApp\application\contracts;
 interface ProjectRepository extends Repository
 {
     public function getAllProjects(string $status): ?array;
+    public function getAllProjectsOfAuthor(string $status, int $author_id): ?array;
+    public function getAllTags(): ?array;
     public function getProjectById(int $id): ?array;
     public function addTag(int $id): void;
     public function removeTag(int $id): void;
