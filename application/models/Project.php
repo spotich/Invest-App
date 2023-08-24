@@ -40,6 +40,24 @@ class Project extends Model
         return $projects;
     }
 
+    public static function getAllProjectsOfAuthor(string $status, int $author_id): ?array
+    {
+        $projectsData = self::$projectRepo->getAllProjectsOfAuthor($status, $author_id);
+        if (is_null($projectsData)) {
+            return null;
+        }
+        $projects = [];
+        foreach ($projectsData as $project) {
+            $projects[] = self::toObject($project);
+        }
+        return $projects;
+    }
+
+    public static function getAllTags(): ?array
+    {
+        return self::$projectRepo->getAllTags();
+    }
+
     public static function findById(int $id): ?Project
     {
         $projectArray = self::$projectRepo->getProjectById($id);
