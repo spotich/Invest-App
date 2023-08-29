@@ -57,8 +57,8 @@ class AuthenticationController
 
     private function authenticateUser(): void
     {
+        SessionController::setCurrentUser($this->user);
         if ($this->user->isUptoDate()) {
-            SessionController::setCurrentUser($this->user);
             $this->pageView->redirectToUrl('/profile');
         }
 

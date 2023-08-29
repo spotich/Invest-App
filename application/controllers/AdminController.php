@@ -75,14 +75,4 @@ class AdminController
             $this->pageView->redirectToUrl('/requests');
         }
     }
-
-    private function acceptRequest()
-    {
-
-    }
-
-    private function declineRequest(string $message)
-    {
-
-    }
 }
