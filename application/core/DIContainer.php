@@ -55,6 +55,7 @@ class DIContainer
             },
             TeamMemberController::class => function () {
                 Project::init($this->get(ProjectRepository::class));
+                User::init($this->get(UserRepository::class));
                 return new TeamMemberController();
             },
         ];

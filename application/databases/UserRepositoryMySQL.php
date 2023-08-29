@@ -20,6 +20,15 @@ class UserRepositoryMySQL extends RepositoryMySQL implements UserRepository
         return is_array($result) ? $result[0] : null;
     }
 
+    public function getAllTeamMembers(): ?array
+    {
+        if ($teamMembers = $this->getUnique('SELECT id, name, surname, avatar FROM users WHERE role = :role', ['role' => 'Team member'])) {
+            return $teamMembers;
+        } else {
+            return null;
+        }
+    }
+
     public function createNewUser(array $user): ?int
     {
         $ok = (isset($user['name']) and isset($user['surname']) and isset($user['email']) and isset($user['role']) and isset($user['password']));

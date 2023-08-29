@@ -6,10 +6,10 @@ use InvestApp\application\views\CreateRequestPageView;
 use InvestApp\application\models\Project;
 use InvestApp\application\models\User;
 use InvestApp\application\traits\SortingStringsTrait;
-use InvestApp\application\views\DetailedRequestPageView;
 use InvestApp\application\views\MenuView;
 use InvestApp\application\views\PageView;
 use InvestApp\application\views\RequestsTeamMemberView;
+use InvestApp\application\views\DetailedRequestTeamMemberView;
 
 class TeamMemberController
 {
@@ -19,7 +19,6 @@ class TeamMemberController
     private ?Project $request = null;
     private ?array $requests = null;
     private MenuView $menuView;
-    private DetailedRequestPageView $detailedRequestView;
     private RequestsTeamMemberView $teamMemberView;
     private PageView $pageView;
 
@@ -52,20 +51,32 @@ class TeamMemberController
         }
         $this->teamMemberView = new RequestsTeamMemberView($declinedRequests, $pendingRequests, $activeRequests);
         $this->pageView->renderPage('My Requests', $this->menuView->getMenu(), $this->teamMemberView->getContent());
+        exit;
+    }
+
+    public function showRequestDetails(int $id): void
+    {
+        if (is_null($request = Project::getDetailedProjectById($id))) {
+            $this->pageView->renderErrorPage(404);
+            return;
+        }
+        $request->tags = $this->sortStrings($request->tags);
+        $detailedRequestView = new DetailedRequestTeamMemberView($request);
+        $this->pageView->renderPage($request->name, $this->menuView->getMenu(), $detailedRequestView->getContent());
+        exit;
     }
 
     public function showCreatePage(): void
     {
-        $availableTags = Project::getAllTags();
-        $createPageView = new CreateRequestPageView($availableTags);
+        $createPageView = new CreateRequestPageView(Project::getAllTags(), User::getAllTeamMembers(), $this->user->id);
         $this->pageView->renderPage('Create', $this->menuView->getMenu(), $createPageView->getContent());
+        exit;
     }
 
-    public function test(): void
+    public function createRequest(): void
     {
-        echo '<pre>';
-        var_dump($_POST);
-        echo '<pre>';
+        Project::toObject($_POST)->save();
+        $this->pageView->redirectToUrl('/my-requests');
         exit;
     }
 }

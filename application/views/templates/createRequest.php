@@ -11,7 +11,7 @@
                     <div class="col has-validation position-relative">
                         <div class="form-floating">
                             <input required id="name" type="text" class="form-control form-control-lg col me-4"
-                                   placeholder="Project name" name="name" pattern="[A-Z][a-z]{1,29}">
+                                   placeholder="Project name" name="name" pattern="[A-Z][A-Z a-z]{1,29}">
                             <label for="name">Project name</label>
                             <div class="valid-tooltip">
                                 OK
@@ -24,7 +24,7 @@
                     <div class="col has-validation position-relative">
                         <div class="form-floating">
                             <input required id="goal" type="text" class="form-control form-control-lg col"
-                                   placeholder="Goal" name="surname" pattern="[1-9][0-9]{1,29}">
+                                   placeholder="Goal" name="goal" pattern="[1-9][0-9]{1,29}">
                             <label for="goal">Project goal</label>
                             <div class="valid-tooltip">
                                 OK
@@ -68,7 +68,7 @@
                 <div class="row mb-5">
                     <div class="col has-validation position-relative">
                         <label for="cover" class="form-label">Project cover</label>
-                        <input required id="cover" name="cover" type="file" class="form-control" accept=".jpg,.gif,.png">
+                        <input required id="cover" name="cover" type="file" class="form-control" accept=".jpeg,.jpg,.png">
                         <div class="valid-tooltip">
                             OK
                         </div>
@@ -78,15 +78,18 @@
                     </div>
                 </div>
                 <div class="row mb-5">
-                    <div class="col has-validation position-relative">
-                        <label for="cover" class="form-label">Carousel slides</label>
-                        <input required id="cover" name="cover" type="file" class="form-control" accept=".jpeg,.jpg,.png" multiple>
-                        <div class="valid-tooltip">
-                            OK
+                    <div class="col">
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label for="cover" class="add-slide">Carousel slides</label>
+                            </div>
                         </div>
-                        <div class="invalid-tooltip">
-                            Slides are required. JPEG, JPG, PNG are allowed.
+                        <div class="row ">
+                            <div class="col-3">
+                                <button id="add-slide" type="button" class="btn btn-dark w-100 mb-4">Add slide</button>
+                            </div>
                         </div>
+                        <div id="slide-cards" class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3"></div>
                     </div>
                 </div>
                 <div class="row mb-5">
@@ -101,11 +104,30 @@
                             OK
                         </div>
                         <div class="invalid-tooltip">
-                            Slides are required. JPEG, JPG, PNG are allowed.
+                            Tags are required
                         </div>
                     </div>
                 </div>
-
+                <div class="row mb-4">
+                    <div class="col has-validation position-relative">
+                        <label for="select-members" class="form-label">Hold down Ctrl (Command) and click on desired Team Members</label>
+                        <select class="form-select" data-live-search="true" multiple required id="select-members" size="<?php echo sizeof($teamMembers); ?>">
+                            <?php foreach($teamMembers as $id => $teamMember): ?>
+                                <option value="<?php echo $id; ?>"><?php echo $teamMember['name']; ?> <?php echo $teamMember['surname']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="valid-tooltip">
+                            OK
+                        </div>
+                        <div class="invalid-tooltip">
+                            Team members are required
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-5">
+                    <div id="member-cards" class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3"></div>
+                </div>
+                <input name="author" value="<?php echo $author; ?>" hidden>
                 <div class="row">
                     <div class="col"></div>
                     <button type="submit" class="btn btn-primary btn-lg col">Create Request</button>
@@ -117,4 +139,11 @@
     </div>
 </div>
 
+
+<script type="text/javascript">
+    let teamMembers = <?php echo json_encode($teamMembers); ?>;
+</script>
 <script type="text/javascript" src="js/formValidation.js"></script>
+<script type="text/javascript" src="js/addTeamMember.js"></script>
+<script type="text/javascript" src="js/addSlide.js"></script>
+

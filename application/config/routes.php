@@ -33,12 +33,17 @@ return [
 
     '#^createRequest$#' => [
         'controller' => TeamMemberController::class,
-        'action' => 'test',
+        'action' => 'createRequest',
     ],
 
     '#^my-requests$#' => [
         'controller' => TeamMemberController::class,
         'action' => 'showMyRequests',
+    ],
+
+    '#^my-requests\/(\d+)$#' => [
+        'controller' => TeamMemberController::class,
+        'action' => 'showRequestDetails',
     ],
 
     '#^requests$#' => [

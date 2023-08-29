@@ -26,6 +26,11 @@ class User extends Model
         return is_null($userArray) ? null : self::toObject($userArray);
     }
 
+    public static function getAllTeamMembers(): ?array
+    {
+        return self::$userRepo->getAllTeamMembers();
+    }
+
     public static function findByEmail(string $email): ?User
     {
         $userArray = self::$userRepo->getUserByEmail($email);
@@ -38,7 +43,7 @@ class User extends Model
         return (date('Y-m-d H:i:s', time()) <= $authenticationData['expiration_time']);
     }
 
-    public function getAuthenticationCode(): ?array
+    public function getAuthenticationCode(): ?string
     {
         $authenticationData = self::$userRepo->getAuthenticationDataForUser($this->id);
         return $authenticationData['code'];

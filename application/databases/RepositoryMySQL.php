@@ -8,7 +8,7 @@ use PDOStatement;
 
 abstract class RepositoryMySQL implements Repository
 {
-    public $db;
+    private $db;
 
     public function __construct()
     {
@@ -41,6 +41,17 @@ abstract class RepositoryMySQL implements Repository
     {
         $result = $this->executeQuery($sql, $params);
         return $result->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    public function getUnique($sql, $params = []): array|false
+    {
+        $result = $this->executeQuery($sql, $params);
+        return $result->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
+    }
+
+    public function getLastInsertId()
+    {
+        return $this->db->lastInsertId();
     }
 
     protected function getUpdateSetting(array $object): string {
