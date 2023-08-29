@@ -59,7 +59,17 @@ class AuthenticationController
     {
         SessionController::setCurrentUser($this->user);
         if ($this->user->isUptoDate()) {
-            $this->pageView->redirectToUrl('/profile');
+            switch($this->user->role) {
+                case 'Team member':
+                    $this->pageView->redirectToUrl('/my-requests');
+                    exit;
+                case 'Admin':
+                    $this->pageView->redirectToUrl('/requests');
+                    exit;
+                default:
+                    $this->pageView->redirectToUrl('/projects');
+                    exit;
+            }
         }
 
         $verificationCode = bin2hex(random_bytes(20));
