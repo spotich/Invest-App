@@ -4,7 +4,8 @@
         <div class="col-1"></div>
         <div class="col-10 project">
             <h2 class="mb-5 mt-3"><?php echo $project->description_short; ?></h2>
-            <h2 class="mt-5 mb-4 text-center test">We have collected <span class="num"><?php echo $project->progress; ?></span>$</h2>
+            <h2 class="mt-5 mb-4 text-center test">We have collected <span
+                        class="num"><?php echo $project->progress; ?></span>$</h2>
             <div class="row mb-2">
                 <div class="col-9">
                     <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuemin="0"
@@ -31,38 +32,37 @@
             <img src="/img/projects/<?php echo $project->cover; ?>"
                  class="img-fluid w-100 border border-2 rounded-3 mb-5 mt-4">
             <h3 class="mb-5"><?php echo $project->description_long; ?></h3>
-
             <div id="carouselExampleCaptions" class="carousel slide mb-5">
                 <div class="carousel-indicators">
-                    <?php for ($i = 0 ; $i < sizeof($project->slides); $i++): ?>
-                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?php echo $i; ?>" <?php if ($i == 0) echo 'class="active"'; ?> aria-current="true" aria-label="Slide <?php echo $i + 1; ?>"></button>
-                    <?php endfor;?>
+                    <?php for ($i = 0; $i < sizeof($project->slides); $i++): ?>
+                        <button type="button" data-bs-target="#carouselExampleCaptions"
+                                data-bs-slide-to="<?php echo $i; ?>" <?php if ($i == 0) echo 'class="active"'; ?>
+                                aria-current="true" aria-label="Slide <?php echo $i + 1; ?>"></button>
+                    <?php endfor; ?>
                 </div>
                 <div class="carousel-inner rounded">
-                    <?php for ($i = 0 ; $i < sizeof($project->slides); $i++): ?>
-                        <?php if ($i === 0): ?>
-                            <div class="carousel-item active">
-                        <?php else: ?>
-                            <div class="carousel-item">
-                        <?php endif;?>
-                            <img src="/img/projects/<?php echo $project->slides[$i]['cover']; ?>" class="carousel-img d-block img-fluid" alt="...">
+                    <?php for ($i = 0; $i < sizeof($project->slides); $i++): ?>
+                        <div class="carousel-item <?php if ($i === 0) echo 'active'; ?>">
+                            <img src="/img/projects/<?php echo $project->slides[$i]['cover']; ?>"
+                                 class="carousel-img d-block img-fluid" alt="...">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5><?php echo $project->slides[$i]['title']; ?></h5>
                                 <p><?php echo $project->slides[$i]['description']; ?></p>
                             </div>
                         </div>
-                    <?php endfor;?>
+                    <?php endfor; ?>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-
             <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
                 <?php foreach ($project->team_members as $team_member): ?>
                     <div class="col d-flex">
@@ -76,7 +76,8 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-            <h2 class="mt-5 mb-4 text-center test">We have collected <span class="num"><?php echo $project->progress; ?></span>$</h2>
+            <h2 class="mt-5 mb-4 text-center test">We have collected <span
+                        class="num"><?php echo $project->progress; ?></span>$</h2>
             <div class="row mb-2">
                 <div class="col-9">
                     <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuemin="0"
