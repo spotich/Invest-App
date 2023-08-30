@@ -2,10 +2,11 @@
 
 require '../application/config/constants.php';
 
-spl_autoload_register(function ($class) {
-    $name = explode(NAMESPACE_NAME, str_replace('\\', '/', $class))[1];
-    $file = dirname(__DIR__, 1) . '/' . $name . '.php';
-    require $file;
+spl_autoload_register(function ($className) {
+    $namespacePrefix = 'InvestApp';
+    $subNamespace = str_replace('InvestApp', '', $className);
+    $baseDirectory = str_replace('\\', '/', $subNamespace);
+    require dirname(__DIR__, 1) . $baseDirectory . '.php';
 });
 
 use InvestApp\application\core\Router;
