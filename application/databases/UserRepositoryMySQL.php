@@ -53,13 +53,13 @@ class UserRepositoryMySQL extends RepositoryMySQL implements UserRepository
         return is_array($result) ? $result[0] : null;
     }
 
-    public function updateUser(array $user): ?bool
+    public function updateUser(array $user)
     {
         if (!isset($user['id'])) {
             return null;
         }
         $setting = $this->getUpdateSetting($user);
-        return $this->executeQuery("UPDATE users SET $setting WHERE id = :id", $user);
+        $this->executeQuery("UPDATE users SET $setting WHERE id = :id", $user);
     }
 
     public function setVerificationCodeForUser(int $id, string $verificationCode): void

@@ -13,94 +13,103 @@ class RecoveryController
 {
     use SendingEmailTrait;
 
-    private ?User $user = null;
     private MenuView $menuView;
     private RecoveryPageView $recoveryView;
     private PageView $pageView;
-    private ConfirmationPageView $confirmationView;
 
     public function __construct()
     {
-        $this->menuView = new MenuView($this->user);
+        $this->menuView = new MenuView();
         $this->recoveryView = new RecoveryPageView();
         $this->pageView = new PageView();
-        $this->confirmationView = new ConfirmationPageView();
     }
 
     public function index(): void
     {
         if (isset($_POST['email'])) {
-            $this->user = User::findByEmail($_POST['email']);
-            if (is_null($this->user)) {
-                $this->recoveryView->setMessage('User not found');
-                $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
-                return;
-            }
-            SessionController::setCurrentUser($this->user);
-            $expirationTime = date('Y-m-d H:i:s', time() + 5 * 60);
-            $recoveryCode = bin2hex(random_bytes(20));
-            $this->user->setRecoveryCode($recoveryCode, $expirationTime);
-
-            if (!$this->sendRecoverEmail($this->user->email, $recoveryCode)) {
-                $this->recoveryView->setMessage('Failed to send an email');
-                $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
-                return;
-            }
-
-            $this->pageView->renderPage('Confirm', $this->menuView->getMenu(),
-                $this->confirmationView->getContent('Check your email', $this->user->email,
-                    'Follow the link in letter to recover the password'
-                ));
-            return;
-        }
-
-        if (isset($_POST['password'])) {
-            $this->user = SessionController::getCurrentUser();
-            if (is_null($this->user)) {
-                $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
-                return;
-            }
+            $this->createRecoveryRequest($_POST['email']);
+        } elseif (isset($_POST['password'])) {
             $this->changePassword($_POST['password']);
-            return;
+            $this->pageView->redirectToUrl('/profile');
+        } else {
+            $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
         }
+    }
 
-        $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
+    private function createRecoveryRequest(string $email): void
+    {
+        $user = $this->getUserDetails($email);
+        $this->provideRecoveryLinkToUser($user);
+        $this->showEmailInstructionToUser($user->email);
+    }
+
+    private function getUserDetails(string $email)
+    {
+        if (is_null($user = User::findByEmail($email))) {
+            $this->recoveryView->setMessage('User not found');
+            $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
+            exit;
+        } else {
+            SessionController::setCurrentUser($user);
+            return $user;
+        }
+    }
+
+    private function provideRecoveryLinkToUser(User $user): void
+    {
+        $expirationTime = date('Y-m-d H:i:s', time() + 5 * 60);
+        $recoveryCode = bin2hex(random_bytes(20));
+        $user->setRecoveryCode($recoveryCode, $expirationTime);
+        if (!$this->sendRecoverEmail($user->email, $recoveryCode)) {
+            $this->recoveryView->setMessage('Failed to send an email');
+            $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
+            exit;
+        }
+    }
+
+    private function showEmailInstructionToUser(string $email)
+    {
+        $confirmationView = new ConfirmationPageView();
+        $this->pageView->renderPage('Confirm', $this->menuView->getMenu(),
+            $confirmationView->getContent(
+                'Check your email',
+                $email,
+                'Follow the link in letter to recover the password'
+            )
+        );
     }
 
     private function changePassword(string $password): void
     {
-        $this->user->password = md5($password);
-        $this->user->save();
-        SessionController::setCurrentUser($this->user);
-        $this->pageView->redirectToUrl('/profile');
+        if (is_null($user = SessionController::getCurrentUser())) {
+            $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
+        } else {
+            $user->password = md5($password);
+            $user->save();
+            SessionController::setCurrentUser($user);
+        }
     }
 
     public function verifyRecovery($recoveryCode): void
     {
-        $this->user = SessionController::getCurrentUser();
-        if (is_null($this->user)) {
-            $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
-            return;
+        if (is_null($user = SessionController::getCurrentUser())) {
+            $errorMessage = '';
         }
-
-        $resetData = $this->user->getResetData();
-        if (is_null($resetData)) {
-            $this->recoveryView->setMessage('Invalid recovery request');
-            $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
-            return;
+        if (is_null($resetData = $user->getResetData())) {
+            $errorMessage = 'Invalid recovery request';
         }
-
         if ($resetData->resetCode !== $recoveryCode) {
-            $this->recoveryView->setMessage('Invalid recovery code');
-            $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
-            return;
+            $errorMessage = 'Invalid recovery code';
         }
-
         if ($resetData->expirationTime < date('Y-m-d H:i:s', time())) {
-            $this->recoveryView->setMessage('Recovery request timed out');
-            $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
+            $errorMessage = 'Recovery request timed out';
         }
 
-        $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getNewPasswordPageContent());
+        if (isset($errorMessage)) {
+            $this->recoveryView->setMessage($errorMessage);
+            $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getRecoveryPageContent());
+        } else {
+            $this->pageView->renderPage('Recovery', $this->menuView->getMenu(), $this->recoveryView->getNewPasswordPageContent());
+        }
     }
 }

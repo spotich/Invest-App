@@ -16,7 +16,7 @@ class MenuView extends View
     private string $pathToButtonsTemplate;
     private string $pathToMiniatureTemplate;
 
-    public function __construct(?User $user)
+    public function __construct(?User $user = null)
     {
         $this->user = $user;
         $this->pathToDefaultMenuTemplate = dirname(__DIR__, 1) . "/views/menus/default.php";
