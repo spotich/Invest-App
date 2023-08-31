@@ -1,6 +1,6 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
 use InvestApp\application\models\User;
@@ -13,7 +13,7 @@ class ProfilePageView extends View
     public function __construct(?User $user)
     {
         $this->user = $user;
-        $this->pathToProfileTemplate = dirname(__DIR__, 1) . "/views/templates/profile.php";
+        $this->pathToProfileTemplate = dirname(__DIR__, 1) . "/templates/profile.php";
     }
 
     public function getContent(): ?string

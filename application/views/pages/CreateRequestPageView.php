@@ -1,6 +1,6 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
 
@@ -17,7 +17,7 @@ class CreateRequestPageView extends View
         $this->tags = $tags;
         $this->teamMembers = $teamMembers;
         $this->authorId = $authorId;
-        $this->relatedTemplate = dirname(__DIR__, 1) . "/views/templates/createRequest.php";
+        $this->relatedTemplate = dirname(__DIR__, 1) . "/templates/createRequest.php";
     }
 
     public function getContent(): ?string

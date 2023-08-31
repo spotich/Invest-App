@@ -1,6 +1,6 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
 
@@ -10,7 +10,7 @@ class RegistrationPageView extends View
 
     public function __construct()
     {
-        $this->pathToRegisterTemplate = dirname(__DIR__, 1) . "/views/templates/register.php";
+        $this->pathToRegisterTemplate = dirname(__DIR__, 1) . "/templates/register.php";
     }
 
     public function getContent(): ?string

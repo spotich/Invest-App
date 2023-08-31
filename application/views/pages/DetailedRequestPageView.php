@@ -1,24 +1,24 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
 use InvestApp\application\models\Project;
 
-class DetailedRequestTeamMemberView extends View
+class DetailedRequestPageView extends View
 {
-    private string $relatedTemplate;
+    private string $pathToDetailedTemplate;
     private ?Project $request;
 
     public function __construct(?Project $request)
     {
         $this->request = $request;
-        $this->relatedTemplate = dirname(__DIR__, 1) . "/views/templates/detailedRequestTeamMember.php";
+        $this->pathToDetailedTemplate = dirname(__DIR__, 1) . "/templates/detailedRequest.php";
     }
 
     public function getContent(): ?string
     {
-        return $this->renderTemplate($this->relatedTemplate, [
+        return $this->renderTemplate($this->pathToDetailedTemplate, [
             'request' => $this->request,
         ]);
     }

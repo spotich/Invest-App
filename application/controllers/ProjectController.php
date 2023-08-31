@@ -2,13 +2,13 @@
 
 namespace InvestApp\application\controllers;
 
-use InvestApp\application\traits\SortingStringsTrait;
-use InvestApp\application\views\DetailedProjectPageView;
-use InvestApp\application\views\ProjectsPageView;
+use InvestApp\application\views\general\MenuView;
+use InvestApp\application\views\general\PageView;
+use InvestApp\application\views\pages\DetailedProjectPageView;
+use InvestApp\application\views\pages\ProjectsPageView;
 use InvestApp\application\models\Project;
 use InvestApp\application\models\User;
-use InvestApp\application\views\MenuView;
-use InvestApp\application\views\PageView;
+use InvestApp\application\traits\SortingStringsTrait;
 
 class ProjectController
 {

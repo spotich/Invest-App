@@ -1,6 +1,6 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\general;
 
 use InvestApp\application\core\View;
 
@@ -11,8 +11,8 @@ class PageView extends View
 
     public function __construct()
     {
-        $this->pathToDefaultLayout = dirname(__DIR__, 1) . "/views/layouts/default.php";
-        $this->pathToErrorLayout = dirname(__DIR__, 1) . "/views/layouts/error.php";
+        $this->pathToDefaultLayout = dirname(__DIR__, 1) . "/layouts/default.php";
+        $this->pathToErrorLayout = dirname(__DIR__, 1) . "/layouts/error.php";
     }
 
     public function renderPage(string $title, string $menu, string $content): void

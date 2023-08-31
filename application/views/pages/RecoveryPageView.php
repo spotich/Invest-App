@@ -1,6 +1,6 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
 
@@ -11,8 +11,8 @@ class RecoveryPageView extends View
 
     public function __construct()
     {
-        $this->pathToRecoverTemplate = dirname(__DIR__, 1) . "/views/templates/recover.php";
-        $this->pathToNewPasswordTemplate = dirname(__DIR__, 1) . "/views/templates/newPassword.php";
+        $this->pathToRecoverTemplate = dirname(__DIR__, 1) . "/templates/recover.php";
+        $this->pathToNewPasswordTemplate = dirname(__DIR__, 1) . "/templates/newPassword.php";
     }
 
     public function getRecoveryPageContent(): ?string

@@ -1,6 +1,6 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
 use InvestApp\application\models\Project;
@@ -13,7 +13,7 @@ class DetailedProjectPageView extends View
     public function __construct(?Project $project)
     {
         $this->project = $project;
-        $this->pathToDetailedTemplate = dirname(__DIR__, 1) . "/views/templates/detailedProject.php";
+        $this->pathToDetailedTemplate = dirname(__DIR__, 1) . "/templates/detailedProject.php";
     }
 
     public function getContent(): ?string

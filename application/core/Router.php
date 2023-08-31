@@ -2,7 +2,7 @@
 
 namespace InvestApp\application\core;
 
-use InvestApp\application\views\PageView;
+use InvestApp\application\views\general\PageView;
 
 class Router
 {

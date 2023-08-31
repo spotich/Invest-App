@@ -1,9 +1,8 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
-use InvestApp\application\models\Project;
 
 class ProjectsPageView extends View
 {
@@ -13,7 +12,7 @@ class ProjectsPageView extends View
     public function __construct(?array $projects)
     {
         $this->projects = $projects;
-        $this->pathToProjectsTemplate = dirname(__DIR__, 1) . "/views/templates/projects.php";
+        $this->pathToProjectsTemplate = dirname(__DIR__, 1) . "/templates/projects.php";
     }
 
     public function getContent(): ?string

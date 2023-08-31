@@ -2,14 +2,14 @@
 
 namespace InvestApp\application\controllers;
 
-use InvestApp\application\views\CreateRequestPageView;
+use InvestApp\application\views\general\MenuView;
+use InvestApp\application\views\general\PageView;
+use InvestApp\application\views\pages\CreateRequestPageView;
+use InvestApp\application\views\pages\DetailedRequestTeamMemberPageView;
+use InvestApp\application\views\pages\RequestsTeamMemberPageView;
 use InvestApp\application\models\Project;
 use InvestApp\application\models\User;
 use InvestApp\application\traits\SortingStringsTrait;
-use InvestApp\application\views\MenuView;
-use InvestApp\application\views\PageView;
-use InvestApp\application\views\RequestsTeamMemberView;
-use InvestApp\application\views\DetailedRequestTeamMemberView;
 
 class TeamMemberController
 {
@@ -19,7 +19,7 @@ class TeamMemberController
     private ?Project $request = null;
     private ?array $requests = null;
     private MenuView $menuView;
-    private RequestsTeamMemberView $teamMemberView;
+    private RequestsTeamMemberPageView $teamMemberView;
     private PageView $pageView;
 
     public function __construct()
@@ -49,7 +49,7 @@ class TeamMemberController
         foreach ($activeRequests as $request) {
             $request->tags = $this->sortStrings($request->tags);
         }
-        $this->teamMemberView = new RequestsTeamMemberView($declinedRequests, $pendingRequests, $activeRequests);
+        $this->teamMemberView = new RequestsTeamMemberPageView($declinedRequests, $pendingRequests, $activeRequests);
         $this->pageView->renderPage('My Requests', $this->menuView->getMenu(), $this->teamMemberView->getContent());
         exit;
     }
@@ -61,7 +61,7 @@ class TeamMemberController
             return;
         }
         $request->tags = $this->sortStrings($request->tags);
-        $detailedRequestView = new DetailedRequestTeamMemberView($request);
+        $detailedRequestView = new DetailedRequestTeamMemberPageView($request);
         $this->pageView->renderPage($request->name, $this->menuView->getMenu(), $detailedRequestView->getContent());
         exit;
     }

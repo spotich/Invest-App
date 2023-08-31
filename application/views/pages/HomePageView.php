@@ -1,6 +1,6 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
 
@@ -10,7 +10,7 @@ class HomePageView extends View
 
     public function __construct()
     {
-        $this->pathToHomeTemplate = dirname(__DIR__, 1) . "/views/templates/home.php";
+        $this->pathToHomeTemplate = dirname(__DIR__, 1) . "/templates/home.php";
     }
 
     public function getContent(): ?string

@@ -1,6 +1,6 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
 
@@ -10,7 +10,7 @@ class AuthenticationPageView extends View
 
     public function __construct()
     {
-        $this->pathToLoginTemplate = dirname(__DIR__, 1) . "/views/templates/login.php";
+        $this->pathToLoginTemplate = dirname(__DIR__, 1) . "/templates/login.php";
     }
 
     public function getContent(): ?string

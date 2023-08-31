@@ -2,7 +2,6 @@
 
 namespace InvestApp\application\core;
 
-
 class View
 {
     protected string $message = '';

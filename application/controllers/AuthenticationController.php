@@ -2,13 +2,13 @@
 
 namespace InvestApp\application\controllers;
 
-use InvestApp\application\views\ConfirmationPageView;
-use InvestApp\application\traits\FetchingGuestDataTrait;
-use InvestApp\application\views\AuthenticationPageView;
-use InvestApp\application\traits\SendingEmailTrait;
+use InvestApp\application\views\general\MenuView;
+use InvestApp\application\views\general\PageView;
+use InvestApp\application\views\pages\AuthenticationPageView;
+use InvestApp\application\views\pages\ConfirmationPageView;
 use InvestApp\application\models\User;
-use InvestApp\application\views\MenuView;
-use InvestApp\application\views\PageView;
+use InvestApp\application\traits\FetchingGuestDataTrait;
+use InvestApp\application\traits\SendingEmailTrait;
 use stdClass;
 
 class AuthenticationController

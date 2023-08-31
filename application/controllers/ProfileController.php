@@ -2,10 +2,10 @@
 
 namespace InvestApp\application\controllers;
 
-use InvestApp\application\views\MenuView;
-use InvestApp\application\views\ProfilePageView;
-use InvestApp\application\models\User;
-use InvestApp\application\views\PageView;
+use InvestApp\application\views\general\MenuView;
+use InvestApp\application\views\general\PageView;
+use InvestApp\application\views\pages\ProfilePageView;
+use InvestApp\InvestApp\application\models\User;
 use stdClass;
 
 class ProfileController

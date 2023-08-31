@@ -2,14 +2,14 @@
 
 namespace InvestApp\application\controllers;
 
-use InvestApp\application\traits\SortingStringsTrait;
-use InvestApp\application\views\RequestsPageView;
+use InvestApp\application\views\general\MenuView;
+use InvestApp\application\views\general\PageView;
+use InvestApp\application\views\pages\DetailedRequestPageView;
+use InvestApp\application\views\pages\RequestsPageView;
 use InvestApp\application\contracts\ProjectRepository;
-use InvestApp\application\models\User;
 use InvestApp\application\models\Project;
-use InvestApp\application\views\MenuView;
-use InvestApp\application\views\PageView;
-use InvestApp\application\views\DetailedRequestPageView;
+use InvestApp\application\models\User;
+use InvestApp\application\traits\SortingStringsTrait;
 
 
 class AdminController

@@ -1,6 +1,6 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
 
@@ -12,7 +12,7 @@ class RequestsPageView extends View
     public function __construct(?array $requests)
     {
         $this->requests = $requests;
-        $this->pathToRequestsTemplate = dirname(__DIR__, 1) . "/views/templates/adminRequests.php";
+        $this->pathToRequestsTemplate = dirname(__DIR__, 1) . "/templates/adminRequests.php";
     }
 
     public function getContent(): ?string

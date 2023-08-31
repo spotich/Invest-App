@@ -1,6 +1,6 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\general;
 
 use InvestApp\application\core\View;
 use InvestApp\application\models\User;
@@ -19,13 +19,13 @@ class MenuView extends View
     public function __construct(?User $user = null)
     {
         $this->user = $user;
-        $this->pathToDefaultMenuTemplate = dirname(__DIR__, 1) . "/views/menus/default.php";
-        $this->pathToButtonsTemplate = dirname(__DIR__, 1) . "/views/menus/buttons.php";
-        $this->pathToMiniatureTemplate = dirname(__DIR__, 1) . "/views/menus/miniature.php";
-        $this->pathToAdminNavigation = dirname(__DIR__, 1) . "/config/menu/admin.php";
-        $this->pathToAnonNavigation = dirname(__DIR__, 1) . "/config/menu/anon.php";
-        $this->pathToInvestorNavigation = dirname(__DIR__, 1) . "/config/menu/investor.php";
-        $this->pathToTeamMemberNavigation = dirname(__DIR__, 1) . "/config/menu/teamMember.php";
+        $this->pathToDefaultMenuTemplate = dirname(__DIR__, 1) . "/menus/default.php";
+        $this->pathToButtonsTemplate = dirname(__DIR__, 1) . "/menus/buttons.php";
+        $this->pathToMiniatureTemplate = dirname(__DIR__, 1) . "/menus/miniature.php";
+        $this->pathToAdminNavigation = dirname(__DIR__, 1) . "/../config/menu/admin.php";
+        $this->pathToAnonNavigation = dirname(__DIR__, 1) . "/../config/menu/anon.php";
+        $this->pathToInvestorNavigation = dirname(__DIR__, 1) . "/../config/menu/investor.php";
+        $this->pathToTeamMemberNavigation = dirname(__DIR__, 1) . "/../config/menu/teamMember.php";
     }
 
     public function getMenu(): string

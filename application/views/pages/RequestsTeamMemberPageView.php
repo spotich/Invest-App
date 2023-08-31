@@ -1,10 +1,10 @@
 <?php
 
-namespace InvestApp\application\views;
+namespace InvestApp\application\views\pages;
 
 use InvestApp\application\core\View;
 
-class RequestsTeamMemberView extends View
+class RequestsTeamMemberPageView extends View
 {
     private array $declinedRequests;
     private array $pendingRequests;
@@ -16,7 +16,7 @@ class RequestsTeamMemberView extends View
         $this->declinedRequests = $declinedRequests;
         $this->pendingRequests = $pendingRequests;
         $this->activeRequests = $activeRequests;
-        $this->pathToRequestsTemplate = dirname(__DIR__, 1) . "/views/templates/requestsTeamMember.php";
+        $this->pathToRequestsTemplate = dirname(__DIR__, 1) . "/templates/requestsTeamMember.php";
     }
 
     public function getContent(): ?string
