@@ -164,28 +164,44 @@ form a {
     font-size: 3rem;
 }
 
-.projects h3 {
+.projects p {
     opacity: 0.3;
     font-size: 1rem;
 }
 
-.project h2, h3 {
+.project h2 {
     opacity: 0.3;
 }
 
-.project h4, h5, p {
+.project p {
     opacity: 0.8;
+}
+
+.member-name {
+    opacity: 0.8;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.member-role {
+    opacity: 0.7;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.member-description {
+    opacity: 0.7;
 }
 
 .project .progress {
     height: 48px;
 }
 
-.test {
+.progress-title {
     font-size: 50px;
 }
 
-.carousel-img{
+.carousel-img {
     filter: brightness(50%);
     object-fit: cover;
 }

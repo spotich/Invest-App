@@ -1,4 +1,4 @@
-<div class="container">
+<section class="container">
     <div class="row">
         <div class="col-2"></div>
         <div class="modal-content col-10">
@@ -41,6 +41,6 @@
         </div>
         <div class="col-2"></div>
     </div>
-</div>
+</section>
 
 <script type="text/javascript" src="js/formValidation.js"></script>

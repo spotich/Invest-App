@@ -1,37 +1,39 @@
-<div class="container">
+<section class="container">
     <h1 class="pageName"><?php echo $project->name; ?></h1>
-    <div class="row ">
+    <div class="row">
         <div class="col-1"></div>
         <div class="col-10 project">
-            <h2 class="mb-5 mt-3"><?php echo $project->description_short; ?></h2>
-            <h2 class="mt-5 mb-4 text-center test">We have collected <span
-                        class="num"><?php echo $project->progress; ?></span>$</h2>
-            <div class="row mb-2">
-                <div class="col-9">
-                    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuemin="0"
-                         aria-valuemax="100">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated"
-                             style="width: <?php echo $project->progress_bar; ?>%"></div>
+            <p class="mb-5 mt-3"><?php echo $project->description_short; ?></p>
+            <section>
+                <h2 class="mt-5 mb-4 text-center progress-title">We have collected <span
+                            class="num"><?php echo $project->progress; ?></span>$</h2>
+                <div class="row mb-2">
+                    <div class="col-9">
+                        <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuemin="0"
+                             aria-valuemax="100">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                 style="width: <?php echo $project->progress_bar; ?>%"></div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-lg btn-primary w-100 payment-button">
+                            Invest
+                        </button>
                     </div>
                 </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-lg btn-primary w-100 payment-button">
-                        Invest
-                    </button>
+                <div class="row">
+                    <div class="col-9 d-flex justify-content-between">
+                        <p>0$</p>
+                        <p><span class="num"><?php echo $project->goal; ?></span>$</p>
+                    </div>
+                    <div class="col-3 text-center">
+                        <p>and return 10% annually</p>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-9 d-flex justify-content-between">
-                    <p>0$</p>
-                    <p><span class="num"><?php echo $project->goal; ?></span>$</p>
-                </div>
-                <div class="col-3 text-center">
-                    <p>and return 10% annually</p>
-                </div>
-            </div>
+            </section>
             <img src="/img/projects/<?php echo $project->cover; ?>"
                  class="img-fluid w-100 border border-2 rounded-3 mb-5 mt-4">
-            <h3 class="mb-5"><?php echo $project->description_long; ?></h3>
+            <p class="mb-5"><?php echo $project->description_long; ?></p>
             <div id="carouselExampleCaptions" class="carousel slide mb-5">
                 <div class="carousel-indicators">
                     <?php for ($i = 0; $i < sizeof($project->slides); $i++): ?>
@@ -65,43 +67,45 @@
             </div>
             <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
                 <?php foreach ($project->team_members as $team_member): ?>
-                    <div class="col d-flex">
+                    <article class="col d-flex">
                         <div class="border border-2 rounded-3 p-4 mb-4">
-                            <img src="/img/users/<?php echo $team_member['avatar']; ?>"
-                                 class="img-fluid rounded-3 mb-3">
-                            <h4><b><?php echo $team_member['name']; ?> <?php echo $team_member['surname']; ?></b></h4>
-                            <h5><?php echo $team_member['role']; ?></h5>
-                            <p><?php echo $team_member['description']; ?></p>
+                            <img src="/img/users/<?php echo $team_member['avatar']; ?>" class="img-fluid rounded-3 mb-3"
+                                 alt="Portrait photo of <?php echo $team_member['name']; ?> <?php echo $team_member['surname']; ?>">
+                            <p class="member-name mb-2"><?php echo $team_member['name']; ?> <?php echo $team_member['surname']; ?></p>
+                            <p class="member-role mb-2"><?php echo $team_member['role']; ?></p>
+                            <p class="member-description"><?php echo $team_member['description']; ?></p>
                         </div>
-                    </div>
+                    </article>
                 <?php endforeach; ?>
             </div>
-            <h2 class="mt-5 mb-4 text-center test">We have collected <span
-                        class="num"><?php echo $project->progress; ?></span>$</h2>
-            <div class="row mb-2">
-                <div class="col-9">
-                    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuemin="0"
-                         aria-valuemax="100">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated"
-                             style="width: <?php echo $project->progress_bar; ?>%"></div>
+            <section>
+                <h2 class="mt-5 mb-4 text-center progress-title">We have collected <span
+                            class="num"><?php echo $project->progress; ?></span>$</h2>
+                <div class="row mb-2">
+                    <div class="col-9">
+                        <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuemin="0"
+                             aria-valuemax="100">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                 style="width: <?php echo $project->progress_bar; ?>%"></div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-lg btn-primary w-100 payment-button">
+                            Invest
+                        </button>
                     </div>
                 </div>
-                <div class="col-3">
-                    <button type="button" class="btn btn-lg btn-primary w-100 payment-button">
-                        Invest
-                    </button>
+                <div class="row">
+                    <div class="col-9 d-flex justify-content-between">
+                        <p>0$</p>
+                        <p><span class="num"><?php echo $project->goal; ?></span>$</p>
+                    </div>
+                    <div class="col-3 text-center">
+                        <p>and return 10% annually</p>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-9 d-flex justify-content-between">
-                    <p>0$</p>
-                    <p><span class="num"><?php echo $project->goal; ?></span>$</p>
-                </div>
-                <div class="col-3 text-center">
-                    <p>and return 10% annually</p>
-                </div>
-            </div>
-            <div id="payment" class="modal">
+            </section>
+            <section id="payment" class="modal">
                 <div class="container">
                     <div class="row">
                         <div class="col-2"></div>
@@ -140,11 +144,11 @@
                         <div class="col-2"></div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
         <div class="col-1"></div>
     </div>
-</div>
+</section>
 
 <script type="text/javascript" src="../js/popup.js"></script>
 <script type="text/javascript" src="../js/numberFormat.js"></script>

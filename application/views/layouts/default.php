@@ -8,7 +8,11 @@
     <script defer type="text/javascript" src="js/menu.js"></script>
 </head>
 <body>
-    <?php echo $menu; ?>
-    <?php echo $content; ?>
+    <header>
+        <?php echo $menu; ?>
+    </header>
+    <main>
+        <?php echo $content; ?>
+    </main>
 </body>
 </html>
