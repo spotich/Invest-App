@@ -10,8 +10,7 @@ class MenuView extends View
     private ?User $user;
     private string $pathToDefaultMenuTemplate;
     private string $pathToAdminNavigation;
-    private string $pathToAnonNavigation;
-    private string $pathToInvestorNavigation;
+    private string $pathToBaseNavigation;
     private string $pathToTeamMemberNavigation;
     private string $pathToButtonsTemplate;
     private string $pathToMiniatureTemplate;
@@ -23,8 +22,7 @@ class MenuView extends View
         $this->pathToButtonsTemplate = dirname(__DIR__, 1) . "/menus/buttons.php";
         $this->pathToMiniatureTemplate = dirname(__DIR__, 1) . "/menus/miniature.php";
         $this->pathToAdminNavigation = dirname(__DIR__, 1) . "/../config/menu/admin.php";
-        $this->pathToAnonNavigation = dirname(__DIR__, 1) . "/../config/menu/anon.php";
-        $this->pathToInvestorNavigation = dirname(__DIR__, 1) . "/../config/menu/investor.php";
+        $this->pathToBaseNavigation = dirname(__DIR__, 1) . "/../config/menu/base.php";
         $this->pathToTeamMemberNavigation = dirname(__DIR__, 1) . "/../config/menu/teamMember.php";
     }
 
@@ -39,14 +37,15 @@ class MenuView extends View
 
     private function getNavItems(): array
     {
+        $baseNavigation = require $this->pathToBaseNavigation;
         if ($this->parametersAreValid()) {
-            return match ($this->user->role) {
+            $advancedNavigation = match ($this->user->role) {
                 'Admin' => require $this->pathToAdminNavigation,
                 'Team member' => require $this->pathToTeamMemberNavigation,
-                'Investor' => require $this->pathToInvestorNavigation,
             };
+            return array_merge($baseNavigation, $advancedNavigation);
         } else {
-            return require $this->pathToAnonNavigation;
+            return $baseNavigation;
         }
     }
 
